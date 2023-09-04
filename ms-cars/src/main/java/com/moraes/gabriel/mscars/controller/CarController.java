@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/cars")
 @AllArgsConstructor
@@ -23,6 +25,11 @@ public class CarController {
     @GetMapping("/{id}")
     public ResponseEntity<CarResponse> getCarById(@PathVariable Long id) {
         return new ResponseEntity<>(carService.getCarById(id), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CarResponse>> getAllCars() {
+        return new ResponseEntity<>(carService.getAllCars(), HttpStatus.OK);
     }
 
 }

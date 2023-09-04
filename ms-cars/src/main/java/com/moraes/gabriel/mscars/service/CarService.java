@@ -11,6 +11,9 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 @AllArgsConstructor
@@ -23,6 +26,20 @@ public class CarService {
         Car car = mapper .map(carRequest, Car.class);
         validateCarAndPilot(car);
         return mapper.map(carRepository.save(car), CarResponse.class);
+
+    }
+
+    public CarResponse getCarById(Long id) {
+        Car car = carRepository.findById(id)
+                .orElseThrow(() -> new CarNotFoundException("Car not found with id: " + id));
+        return mapper.map(car, CarResponse.class);
+    }
+
+    public List<CarResponse> getAllCars() {
+        List<Car> cars = carRepository.findAll();
+        return cars.stream()
+                .map(instructor -> mapper.map(instructor, CarResponse.class))
+                .collect(Collectors.toList());
 
     }
 
@@ -42,11 +59,5 @@ public class CarService {
 
     private boolean isPilotExists(String name, Integer age) {
         return carRepository.existsByPilotNameAndPilotAge(name, age);
-    }
-
-    public CarResponse getCarById(Long id) {
-        Car car = carRepository.findById(id)
-                .orElseThrow(() -> new CarNotFoundException("Car not found with id: " + id));
-        return mapper.map(car, CarResponse.class);
     }
 }
