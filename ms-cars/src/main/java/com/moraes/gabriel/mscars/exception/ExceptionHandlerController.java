@@ -39,4 +39,13 @@ public class ExceptionHandlerController {
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(CarNotFoundException.class)
+    public ResponseEntity<ErrorResponse> carNotFoundException(Exception ex) {
+        ErrorResponse message = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                timestamp,
+                ex.getMessage());
+        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+    }
+
 }

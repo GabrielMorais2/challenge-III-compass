@@ -1,6 +1,7 @@
 package com.moraes.gabriel.mscars.service;
 
 import com.moraes.gabriel.mscars.exception.CarAlreadyExistsException;
+import com.moraes.gabriel.mscars.exception.CarNotFoundException;
 import com.moraes.gabriel.mscars.exception.PilotAlreadyExistsException;
 import com.moraes.gabriel.mscars.model.Car;
 import com.moraes.gabriel.mscars.model.payload.CarRequest;
@@ -43,4 +44,9 @@ public class CarService {
         return carRepository.existsByPilotNameAndPilotAge(name, age);
     }
 
+    public CarResponse getCarById(Long id) {
+        Car car = carRepository.findById(id)
+                .orElseThrow(() -> new CarNotFoundException("Car not found with id: " + id));
+        return mapper.map(car, CarResponse.class);
+    }
 }
