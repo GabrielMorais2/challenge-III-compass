@@ -15,8 +15,6 @@ public class CarResponse {
     private String brand;
     private String model;
     private Pilot pilot;
-
-    @Pattern(regexp = "^(19[789]\\d|20[012]\\d)$", message = "Please enter a valid year in YYYY format (eg 2015) and greater than 1970")
     private String year;
 }
 
