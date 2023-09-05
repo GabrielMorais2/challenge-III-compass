@@ -1,25 +1,22 @@
 package com.moraes.gabriel.msraces.model.payload;
 
-import com.moraes.gabriel.msraces.cars.CarResponse;
 import com.moraes.gabriel.msraces.model.Track;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RaceResultResponse {
+public class RaceResponse {
 
     private Long id;
     private String name;
     private LocalDateTime startTime;
-    private List<CarResponse> cars = new ArrayList<>();
+    private List<Long> carsIds;
     private Track track;
+
 }

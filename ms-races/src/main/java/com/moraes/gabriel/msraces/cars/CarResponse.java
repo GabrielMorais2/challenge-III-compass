@@ -14,5 +14,15 @@ public class CarResponse {
     private String model;
     private PilotResponse pilot;
     private String year;
+
+    @Override
+    public String toString() {
+        return "CarResponse{" +
+                "id=" + id +
+                ", brand='" + brand +
+                ", model='" + model +
+                ", model='" + year +
+                '}';
+    }
 }
 

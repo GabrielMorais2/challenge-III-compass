@@ -1,11 +1,12 @@
 package com.moraes.gabriel.msraces.service;
 
 import com.moraes.gabriel.msraces.Repository.RaceRepository;
-import com.moraes.gabriel.msraces.Repository.TrackRepository;
 import com.moraes.gabriel.msraces.cars.CarResponse;
 import com.moraes.gabriel.msraces.cars.client.CarsFeignClient;
 import com.moraes.gabriel.msraces.model.Race;
 import com.moraes.gabriel.msraces.model.Track;
+import com.moraes.gabriel.msraces.model.payload.RaceRequest;
+import com.moraes.gabriel.msraces.model.payload.RaceResponse;
 import com.moraes.gabriel.msraces.model.payload.RaceResultResponse;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 public class RacesService {
 
     private final CarsFeignClient carsFeignClient;
-    private final TrackRepository trackRepository;
+    private final TrackService trackService;
     private final RaceRepository raceRepository;
     private final ModelMapper mapper;
     private final int numberOfLaps = 10;
@@ -32,39 +33,44 @@ public class RacesService {
         List<CarResponse> allCars = carsFeignClient.getAllCars();
         int maxCars = Math.min(10, allCars.size());
         List<CarResponse> selectedCars = new ArrayList<>(allCars);
-
         Collections.shuffle(selectedCars);
         return selectedCars.subList(0, maxCars);
     }
 
-    public RaceResultResponse startRaces(Long idTrack) {
-        Track track = trackRepository.findById(idTrack)
-                .orElseThrow(() -> new EntityNotFoundException("Track not found with id: " + idTrack));
-
+    public RaceResponse startRaces(RaceRequest request) {
+        Track track = trackService.getTrackById(request.getIdTrack());
         List<CarResponse> selectedCars = getRandomCarsForRace();
-
-        Race race = createRace("teste", track, selectedCars);
-
-        System.out.println(race.getCarsIds());
-
+        Race race = createRace(request.getName(), track, selectedCars);
         race = raceRepository.save(race);
-
-        runRace(race);
-
-        return mapper.map(race, RaceResultResponse.class);
+        return mapper.map(race, RaceResponse.class);
     }
 
-    public void runRace(Race race) {
-        List<Long> carsInRace = race.getCarsIds();
+    public RaceResultResponse runRace(Long idRace) {
+        Race race = getRaceById(idRace);
+        List<CarResponse> carsDetails = new ArrayList<>();
+
         for (int lap = 1; lap <= numberOfLaps; lap++) {
-            for (int i = 1; i < carsInRace.size(); i++) {
-                Long carAhead = carsInRace.get(i - 1);
-                Long car = carsInRace.get(i);
+            for (int i = 1; i < race.getCarsIds().size(); i++) {
                 if (canOvertake()) {
-                    swapCars(carsInRace, i, i - 1);
+                    swapCars(race.getCarsIds(), i, i - 1);
                 }
             }
         }
+
+        race.getCarsIds().forEach(carId -> {
+            CarResponse carResponse = carsFeignClient.getCarById(carId);
+            carsDetails.add(carResponse);
+        });
+
+        RaceResultResponse raceResultResponse = mapper.map(race, RaceResultResponse.class);
+        raceResultResponse.setCars(carsDetails);
+
+        return raceResultResponse;
+    }
+
+    public Race getRaceById(Long idRace) {
+        return raceRepository.findById(idRace)
+                .orElseThrow(() -> new EntityNotFoundException("Race not found with id: " + idRace));
     }
 
     private Race createRace(String name, Track track, List<CarResponse> selectedCars) {

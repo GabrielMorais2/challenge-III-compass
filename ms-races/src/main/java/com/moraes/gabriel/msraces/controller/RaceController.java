@@ -1,8 +1,11 @@
 package com.moraes.gabriel.msraces.controller;
 
 import com.moraes.gabriel.msraces.cars.CarResponse;
+import com.moraes.gabriel.msraces.model.payload.RaceRequest;
+import com.moraes.gabriel.msraces.model.payload.RaceResponse;
 import com.moraes.gabriel.msraces.model.payload.RaceResultResponse;
 import com.moraes.gabriel.msraces.service.RacesService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +24,13 @@ public class RaceController {
         return new ResponseEntity<>(racesService.getRandomCarsForRace(), HttpStatus.OK);
     }
 
-    @PostMapping("/start-races/{idTrack}")
-    public ResponseEntity<RaceResultResponse> startRaces(@PathVariable Long idTrack){
-        return new ResponseEntity<>(racesService.startRaces(idTrack), HttpStatus.CREATED);
+    @PostMapping("/create-races")
+    public ResponseEntity<RaceResponse> startRaces(@Valid @RequestBody RaceRequest raceRequest){
+        return new ResponseEntity<>(racesService.startRaces(raceRequest), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/run-races/{idRace}")
+    public ResponseEntity<RaceResultResponse> runRaces(@PathVariable Long idRace){
+        return new ResponseEntity<>(racesService.runRace(idRace), HttpStatus.CREATED);
     }
 }
