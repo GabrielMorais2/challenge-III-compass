@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  ms-cars:
+    image: postgres
+    container_name: ms-cars
+    restart: always
+    environment:
+      - POSTGRES_DB=db_car
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+    ports:
+      - 5435:5432
