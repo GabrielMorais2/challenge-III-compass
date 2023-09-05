@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  ms-races:
+    image: postgres
+    container_name: ms-races
+    restart: always
+    environment:
+      - POSTGRES_DB=db_races
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+    ports:
+      - 5434:5432
