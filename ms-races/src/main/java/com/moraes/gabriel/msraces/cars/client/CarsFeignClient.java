@@ -1,4 +1,4 @@
-package com.moraes.gabriel.msraces.feign;
+package com.moraes.gabriel.msraces.cars.client;
 
 import com.moraes.gabriel.msraces.cars.CarResponse;
 import org.springframework.cloud.openfeign.FeignClient;
