@@ -43,6 +43,13 @@ public class CarService {
 
     }
 
+    public void deleteCarById(Long id) {
+        Car car = carRepository.findById(id)
+                .orElseThrow(() -> new CarNotFoundException("Car not found with id: " + id));
+
+        carRepository.delete(car);
+    }
+
     private void validateCarAndPilot(Car car) {
         if (isCarExists(car.getBrand(), car.getModel(), car.getYear())) {
             throw new CarAlreadyExistsException("There is already a corresponding car registered.");
