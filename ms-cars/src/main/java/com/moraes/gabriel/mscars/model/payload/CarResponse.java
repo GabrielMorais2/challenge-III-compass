@@ -1,7 +1,6 @@
 package com.moraes.gabriel.mscars.model.payload;
 
 import com.moraes.gabriel.mscars.model.Pilot;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
