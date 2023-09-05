@@ -60,6 +60,18 @@ public class CarService {
         }
     }
 
+    public CarResponse updateCar(Long id, CarRequest carRequest) {
+        Car existingCar = carRepository.findById(id)
+                .orElseThrow(() -> new CarNotFoundException("Car not found with id: " + id));
+
+        Car updatedCar = mapper.map(carRequest, Car.class);
+        updatedCar.setId(existingCar.getId());
+
+        validateCarAndPilot(updatedCar);
+
+        return mapper.map(carRepository.save(updatedCar), CarResponse.class);
+    }
+
     private boolean isCarExists(String brand, String model, String year) {
         return carRepository.existsByBrandAndModelAndYear(brand, model, year);
     }

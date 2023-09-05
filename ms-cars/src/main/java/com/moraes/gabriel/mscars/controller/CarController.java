@@ -38,4 +38,10 @@ public class CarController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<CarResponse> updateCar(@PathVariable Long id, @Valid @RequestBody CarRequest carRequest) {
+        CarResponse updatedCar = carService.updateCar(id, carRequest);
+        return new ResponseEntity<>(updatedCar, HttpStatus.OK);
+    }
+
 }
