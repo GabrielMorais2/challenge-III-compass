@@ -15,7 +15,6 @@ public class Race {
 
     private String name;
     private List<CarResponse> cars;
-    private int laps;
     private Track track;
 
 }

@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.moraes.gabriel.msraces.config.AppConfig.NUM_LAPS;
 import static com.moraes.gabriel.msraces.domain.Track.validations.Validations.validateNumCars;
 
 
@@ -43,14 +44,14 @@ public class RacesService {
         }
     }
 
-    public void startRaces(RaceRequest request) {
+    public void runRaces(RaceRequest request) {
         validateNumCars(request.getNumCars());
 
         Track track = trackService.getTrackById(request.getIdTrack());
         List<CarResponse> selectedCars = getRandomCarsForRace(request.getNumCars());
         setInitialCarPositions(selectedCars);
 
-        Race race = new Race(request.getName(), selectedCars, request.getLaps(), track);
+        Race race = new Race(request.getName(), selectedCars, track);
 
         simulateRace(race);
 
@@ -63,16 +64,11 @@ public class RacesService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     private void simulateRace(Race race) {
-        for (int lap = 0; lap < race.getLaps(); lap++) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-
+        for (int lap = 0; lap < NUM_LAPS; lap++) {
             race.getCars().sort(Comparator.comparingInt(CarResponse::getPosition).reversed());
 
             for (CarResponse car : race.getCars()) {

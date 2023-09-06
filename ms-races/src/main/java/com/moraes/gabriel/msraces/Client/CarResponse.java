@@ -1,5 +1,6 @@
 package com.moraes.gabriel.msraces.Client;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,8 @@ public class CarResponse {
     private PilotResponse pilot;
     private String year;
     private int position;
+
+    @JsonIgnore
     private int speed = 0;
 
     public void increaseSpeed() {

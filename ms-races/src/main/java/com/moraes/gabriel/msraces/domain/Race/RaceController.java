@@ -16,10 +16,10 @@ public class RaceController {
 
     private final RacesService racesService;
 
-    @PostMapping("/start-race")
+    @PostMapping("/run-race")
     public ResponseEntity<String> startRaces(@Valid @RequestBody RaceRequest raceRequest){
-        racesService.startRaces(raceRequest);
-        return new ResponseEntity<>("The race has started successfully.", HttpStatus.CREATED);
+        racesService.runRaces(raceRequest);
+        return new ResponseEntity<>("Race carried out successfully, to consult the result go to:", HttpStatus.CREATED);
     }
 
 }

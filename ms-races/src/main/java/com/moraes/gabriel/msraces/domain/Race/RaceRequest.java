@@ -17,7 +17,4 @@ public class RaceRequest {
     private String idTrack;
     @NotNull
     private int numCars;
-
-    @NotNull
-    private int laps;
 }

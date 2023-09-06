@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  ms-cars:
+    image: postgres
+    container_name: ms-cars
+    restart: always
+    environment:
+      - POSTGRES_DB=db_ms-car
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+    ports:
+      - "${MS_CARS_PORT:-5433}:5432"
+
+  ms-history:
+    image: mongo
+    container_name: ms-history
+    restart: always
+    environment:
+      - MONGO_INITDB_DATABASE=db_ms-history
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    ports:
+      - "${MS_HISTORY_PORT:-27017}:27017"
+
+  ms-races:
+    image: mongo
+    container_name: ms-races
+    restart: always
+    environment:
+      - MONGO_INITDB_DATABASE=db_ms-races
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    ports:
+      - "${MS_RACES_PORT:-27018}:27017"
+
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    container_name: rabbitmq
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - "${RABBITMQ_PORT:-5672}:5672"
+      - "${RABBITMQ_MANAGEMENT_PORT:-15672}:15672"
