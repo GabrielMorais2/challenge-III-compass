@@ -2,7 +2,7 @@ package com.moraes.gabriel.msraces.domain.Race;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.moraes.gabriel.msraces.Client.CarResponse;
-import com.moraes.gabriel.msraces.Client.client.CarsFeignClient;
+import com.moraes.gabriel.msraces.Client.CarsFeignClient;
 import com.moraes.gabriel.msraces.domain.Track.Track;
 import com.moraes.gabriel.msraces.domain.Track.TrackService;
 import com.moraes.gabriel.msraces.rabbitmq.RabbitMQMessageProducer;

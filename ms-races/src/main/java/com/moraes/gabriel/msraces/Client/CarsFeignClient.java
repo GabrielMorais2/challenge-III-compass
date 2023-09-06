@@ -1,4 +1,4 @@
-package com.moraes.gabriel.msraces.Client.client;
+package com.moraes.gabriel.msraces.Client;
 
 import com.moraes.gabriel.msraces.Client.CarResponse;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -12,6 +12,4 @@ public interface CarsFeignClient {
 
     @GetMapping("/cars")
     List<CarResponse> getAllCars();
-    @GetMapping("/cars/{id}")
-    CarResponse getCarById(@PathVariable Long id);
 }
