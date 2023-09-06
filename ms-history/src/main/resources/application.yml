@@ -1,9 +1,19 @@
-pring:
+server:
+  port: 8091
+
+spring:
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
   data:
     mongodb:
-      host: ${MONGODB_HOST:localhost}
-      port: ${MONGODB_PORT:27017}
-      database: ${MONGODB_DATABASE:db_history}
-  mongodb:
-    username: ${MONGODB_USERNAME:root}
-    password: ${MONGODB_PASSWORD:root}
+      host: localhost
+      port: 27017
+      database: db_history
+      username: root
+      password: root
+      authentication-database: admin
