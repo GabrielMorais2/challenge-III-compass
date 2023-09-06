@@ -1,5 +1,6 @@
 package com.moraes.gabriel.msraces.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.moraes.gabriel.msraces.Repository.RaceRepository;
 import com.moraes.gabriel.msraces.cars.CarResponse;
 import com.moraes.gabriel.msraces.cars.client.CarsFeignClient;
@@ -8,6 +9,7 @@ import com.moraes.gabriel.msraces.model.Track;
 import com.moraes.gabriel.msraces.model.payload.RaceRequest;
 import com.moraes.gabriel.msraces.model.payload.RaceResponse;
 import com.moraes.gabriel.msraces.model.payload.RaceResultResponse;
+import com.moraes.gabriel.msraces.rabbitmq.RabbitMQMessageProducer;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 public class RacesService {
 
     private final CarsFeignClient carsFeignClient;
+    private final RabbitMQMessageProducer messageProducer;
     private final TrackService trackService;
     private final RaceRepository raceRepository;
     private final ModelMapper mapper;
@@ -45,7 +48,7 @@ public class RacesService {
         return mapper.map(race, RaceResponse.class);
     }
 
-    public RaceResultResponse runRace(Long idRace) {
+    public RaceResultResponse runRace(Long idRace){
         Race race = getRaceById(idRace);
         List<CarResponse> carsDetails = new ArrayList<>();
 
@@ -64,6 +67,13 @@ public class RacesService {
 
         RaceResultResponse raceResultResponse = mapper.map(race, RaceResultResponse.class);
         raceResultResponse.setCars(carsDetails);
+
+
+        try{
+            messageProducer.publish(carsDetails);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
 
         return raceResultResponse;
     }
