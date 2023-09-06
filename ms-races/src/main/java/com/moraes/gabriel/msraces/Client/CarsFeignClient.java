@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name = "ms-cars", url="localhost:8080/api/v1")
+@FeignClient(name = "MS-CARS")
 public interface CarsFeignClient {
 
-    @GetMapping("/cars")
+    @GetMapping("/api/v1/cars")
     List<CarResponse> getAllCars();
 }
