@@ -1,5 +1,6 @@
-package com.moraes.gabriel.mshistory.race.model;
+package com.moraes.gabriel.mshistory.domain.Race;
 
+import com.moraes.gabriel.mshistory.domain.Car.CarResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,10 +15,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "race_results")
-public class RaceResultResponse {
+public class RaceResult {
 
     @Id
     private String id;
+    private String name;
     private List<CarResponse> cars;
     private LocalDateTime createdAt;
 }

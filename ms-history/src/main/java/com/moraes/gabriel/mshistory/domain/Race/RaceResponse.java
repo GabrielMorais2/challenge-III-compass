@@ -1,6 +1,6 @@
-package com.moraes.gabriel.msraces.model.payload;
+package com.moraes.gabriel.mshistory.domain.Race;
 
-import com.moraes.gabriel.msraces.model.Track;
+import com.moraes.gabriel.mshistory.domain.Car.CarResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,15 +8,15 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class RaceResponse {
 
-    private Long id;
+    private String id;
     private String name;
-    private LocalDateTime startTime;
-    private List<Long> carsIds;
-    private Track track;
+    private LocalDateTime createdAt;
+    private List<CarResponse> cars;
 
 }

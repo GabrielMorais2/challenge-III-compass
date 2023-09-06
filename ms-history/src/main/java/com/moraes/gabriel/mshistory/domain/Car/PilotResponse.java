@@ -1,4 +1,4 @@
-package com.moraes.gabriel.mshistory.race.model;
+package com.moraes.gabriel.mshistory.domain.Car;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
