@@ -1,4 +1,4 @@
-package com.moraes.gabriel.msraces.cars;
+package com.moraes.gabriel.msraces.Client;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,15 +14,11 @@ public class CarResponse {
     private String model;
     private PilotResponse pilot;
     private String year;
+    private int position;
+    private int speed = 0;
 
-    @Override
-    public String toString() {
-        return "CarResponse{" +
-                "id=" + id +
-                ", brand='" + brand +
-                ", model='" + model +
-                ", model='" + year +
-                '}';
+    public void increaseSpeed() {
+        this.speed = 100 + (int) (Math.random() * 101);
     }
 }
 

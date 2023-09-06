@@ -1,4 +1,4 @@
-package com.moraes.gabriel.msraces.cars;
+package com.moraes.gabriel.msraces.Client;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

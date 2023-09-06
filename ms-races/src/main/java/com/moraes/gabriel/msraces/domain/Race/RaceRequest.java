@@ -1,4 +1,4 @@
-package com.moraes.gabriel.msraces.model.payload;
+package com.moraes.gabriel.msraces.domain.Race;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,5 +14,10 @@ public class RaceRequest {
     @NotBlank
     private String name;
     @NotNull
-    private Long idTrack;
+    private String idTrack;
+    @NotNull
+    private int numCars;
+
+    @NotNull
+    private int laps;
 }
