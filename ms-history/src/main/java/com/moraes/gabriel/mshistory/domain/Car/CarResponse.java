@@ -16,6 +16,6 @@ public class CarResponse {
     private String model;
     private PilotResponse pilot;
     private String year;
-
+    private int position;
 }
 

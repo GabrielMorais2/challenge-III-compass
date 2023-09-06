@@ -5,15 +5,15 @@ spring:
 
   rabbitmq:
     host: localhost
-    port: 5672
-    username: guest
-    password: guest
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_DEFAULT_USER:guest}
+    password: ${RABBITMQ_DEFAULT_PASS:guest}
 
   data:
     mongodb:
       host: localhost
-      port: 27017
-      database: db_history
-      username: root
-      password: root
+      port: ${MS_HISTORY_PORT:27017}
+      database: ${MONGO_INITDB_DATABASE:db_ms-history}
+      username: ${MONGO_INITDB_ROOT_USERNAME:root}
+      password: ${MONGO_INITDB_ROOT_PASSWORD:root}
       authentication-database: admin
