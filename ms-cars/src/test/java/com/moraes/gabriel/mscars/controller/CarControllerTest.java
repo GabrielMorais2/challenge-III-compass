@@ -57,10 +57,10 @@ class CarControllerTest {
 
     @Test
     void createCar_withEmptyData_ReturnBadRequest() throws Exception {
-        CarRequest emptyCoordinatorDtoRequest = new CarRequest("", "", new PilotRequest(), "");
+        CarRequest emptyCarDtoRequest = new CarRequest("", "", new PilotRequest(), "");
 
         mockMvc.perform(post("/api/v1/cars/create-car")
-                        .content(objectMapper.writeValueAsString(emptyCoordinatorDtoRequest))
+                        .content(objectMapper.writeValueAsString(emptyCarDtoRequest))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
