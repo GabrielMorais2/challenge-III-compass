@@ -1,6 +1,5 @@
 package com.moraes.gabriel.mshistory.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moraes.gabriel.mshistory.exception.ObjectNotFoundException;
 import com.moraes.gabriel.mshistory.race.model.CarResponse;
 import com.moraes.gabriel.mshistory.race.model.RaceResultResponse;
