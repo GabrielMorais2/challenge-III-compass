@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/history")
+@RequestMapping("/v1/history")
 @RequiredArgsConstructor
 public class RaceHistoryController {
     private final RaceHistoryService raceHistoryService;
 
-    @GetMapping("/race-data")
+    @GetMapping("/races")
     public ResponseEntity<List<RaceResponse>> getAllRaceData() {
         return  new ResponseEntity<>(raceHistoryService.getAllRaceData(), HttpStatus.OK);
 
     }
 
-    @GetMapping("/race-data/{id}")
+    @GetMapping("/races/{id}")
     public ResponseEntity<RaceResponse> getRaceDataById(@PathVariable String id) {
         return new ResponseEntity<>(raceHistoryService.getRaceDataById(id), HttpStatus.OK);
     }
