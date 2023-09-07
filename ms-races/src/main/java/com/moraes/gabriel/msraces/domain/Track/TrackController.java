@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/track")
+@RequestMapping("/v1/tracks")
 @RequiredArgsConstructor
 public class TrackController {
 
     private final TrackService trackService;
-    @PostMapping("/create-track")
-    public ResponseEntity<TrackResponse> createCar(@Valid @RequestBody TrackRequest trackRequest){
+    @PostMapping
+    public ResponseEntity<TrackResponse> createTrack(@Valid @RequestBody TrackRequest trackRequest){
         return new ResponseEntity<>(trackService.createTrack(trackRequest), HttpStatus.CREATED);
     }
 

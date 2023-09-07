@@ -1,0 +1,37 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: MS-CARS
+          uri: lb://MS-CARS
+          predicates:
+            - Path=/v1/cars/**
+
+        - id: MS-HISTORY
+          uri: lb://MS-HISTORY
+          predicates:
+            - Path=/v1/history/**
+
+        - id: MS-RACES
+          uri: lb://MS-RACES
+          predicates:
+            - Path=/v1/races/**,/v1/tracks/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+    enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

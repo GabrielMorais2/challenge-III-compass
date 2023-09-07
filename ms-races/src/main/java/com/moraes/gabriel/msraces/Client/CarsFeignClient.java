@@ -10,6 +10,6 @@ import java.util.List;
 @FeignClient(name = "MS-CARS")
 public interface CarsFeignClient {
 
-    @GetMapping("/api/v1/cars")
+    @GetMapping("/v1/cars")
     List<CarResponse> getAllCars();
 }
