@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/cars")
+@RequestMapping("/v1/cars")
 @AllArgsConstructor
 public class CarController {
 
     private final CarService carService;
-    @PostMapping("/create-car")
+    @PostMapping
     public ResponseEntity<CarResponse> createCar(@Valid @RequestBody CarRequest carRequest){
         return new ResponseEntity<>(carService.createCar(carRequest), HttpStatus.CREATED);
     }
