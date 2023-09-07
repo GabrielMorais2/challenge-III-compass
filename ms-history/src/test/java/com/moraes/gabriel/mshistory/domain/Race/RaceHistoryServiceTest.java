@@ -57,7 +57,7 @@ class RaceHistoryServiceTest {
     }
 
     @Test
-    void getRaceDataById_WithNoExistingId_ReturnRaceResponse() throws IOException {
+    void getRaceDataById_WithNoExistingId_ReturnRaceResponse() {
         when(raceHistoryRepository.findById(anyString())).thenReturn(Optional.empty());
 
         assertThrows(ObjectNotFoundException.class, () -> raceHistoryService.getRaceDataById(anyString()));
