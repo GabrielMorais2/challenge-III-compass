@@ -1,9 +1,10 @@
 server:
-  port: 8090
+  port: 8200
 
 spring:
   application:
     name: MS-RACES
+
   rabbitmq:
     host: localhost
     port: ${RABBITMQ_PORT:5672}

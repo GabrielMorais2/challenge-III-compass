@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/races")
+@RequestMapping("/v1/races")
 public class RaceController {
 
     private final RacesService racesService;
 
-    @PostMapping("/run-race")
+    @PostMapping("/start")
     public ResponseEntity<String> startRaces(@Valid @RequestBody RaceRequest raceRequest){
         racesService.runRaces(raceRequest);
-        return new ResponseEntity<>("Race carried out successfully, to consult the result go to:", HttpStatus.CREATED);
+        return new ResponseEntity<>("Race carried out successfully", HttpStatus.CREATED);
     }
 
 }
