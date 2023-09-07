@@ -110,16 +110,8 @@ class CarControllerTest {
         when(carService.updateCar(1L, carRequest)).thenReturn(carResponse);
 
         mockMvc.perform(put("/api/v1/cars/{id}", 1L)
-                        .content(asJsonString(carRequest))
+                        .content(objectMapper.writeValueAsString(carRequest))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-    }
-
-    private String asJsonString(final Object obj) {
-        try {
-            return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 }
