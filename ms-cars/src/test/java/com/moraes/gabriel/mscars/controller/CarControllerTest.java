@@ -45,7 +45,7 @@ class CarControllerTest {
 
         when(carService.createCar(carRequest)).thenReturn(carResponse);
 
-        mockMvc.perform(post("/api/v1/cars/create-car")
+        mockMvc.perform(post("/v1/cars")
                         .content(objectMapper.writeValueAsString(carResponse))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
@@ -59,7 +59,7 @@ class CarControllerTest {
     void createCar_withEmptyData_ReturnBadRequest() throws Exception {
         CarRequest emptyCarDtoRequest = new CarRequest("", "", new PilotRequest(), "");
 
-        mockMvc.perform(post("/api/v1/cars/create-car")
+        mockMvc.perform(post("/v1/cars")
                         .content(objectMapper.writeValueAsString(emptyCarDtoRequest))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -71,7 +71,7 @@ class CarControllerTest {
 
         when(carService.getCarById(anyLong())).thenReturn(carResponse);
 
-        mockMvc.perform(get("/api/v1/cars/{id}", 1L))
+        mockMvc.perform(get("/v1/cars/{id}", 1L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(carResponse.getId()))
                 .andExpect(jsonPath("$.brand").value(carResponse.getBrand()))
@@ -85,7 +85,7 @@ class CarControllerTest {
 
         when(carService.getAllCars()).thenReturn(List.of(carResponse));
 
-        mockMvc.perform(get("/api/v1/cars"))
+        mockMvc.perform(get("/v1/cars"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(carResponse.getId()))
@@ -98,7 +98,7 @@ class CarControllerTest {
     void deleteCarById() throws Exception {
         doNothing().when(carService).deleteCarById(anyLong());
 
-        mockMvc.perform(delete("/api/v1/cars/{id}", 1L))
+        mockMvc.perform(delete("/v1/cars/{id}", 1L))
                 .andExpect(status().isNoContent());
     }
 
@@ -109,7 +109,7 @@ class CarControllerTest {
 
         when(carService.updateCar(1L, carRequest)).thenReturn(carResponse);
 
-        mockMvc.perform(put("/api/v1/cars/{id}", 1L)
+        mockMvc.perform(put("/v1/cars/{id}", 1L)
                         .content(objectMapper.writeValueAsString(carRequest))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
