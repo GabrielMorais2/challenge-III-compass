@@ -12,6 +12,17 @@ services:
     ports:
       - "${MS_CARS_PORT:-5433}:5432"
 
+  ms-users:
+    image: postgres
+    container_name: ms-users
+    restart: always
+    environment:
+      - POSTGRES_DB=db_ms-users
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+    ports:
+      - "${MS_CARS_PORT:-5434}:5432"
+
   ms-history:
     image: mongo
     container_name: ms-history
