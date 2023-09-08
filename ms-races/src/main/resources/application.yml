@@ -1,0 +1,46 @@
+server:
+  port: 8200
+  servlet:
+    context-path: /
+
+openapi:
+  service:
+    title: ms-races
+    version: 1.0.0
+    url: http://localhost:9090
+springdoc:
+  api-docs:
+    path: /ms-races/v3/api-docs
+  swagger-ui:
+    path: /ms-races/swagger-ui.html
+
+spring:
+  application:
+    name: MS-RACES
+
+  rabbitmq:
+    host: localhost
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_DEFAULT_USER:guest}
+    password: ${RABBITMQ_DEFAULT_PASS:guest}
+
+  cloud:
+    config:
+      enabled: false
+
+  data:
+    mongodb:
+      host: localhost
+      port: ${MS_HISTORY_PORT:27018}
+      database: ${MONGO_INITDB_DATABASE:db_ms-history}
+      username: ${MONGO_INITDB_ROOT_USERNAME:root}
+      password: ${MONGO_INITDB_ROOT_PASSWORD:root}
+      authentication-database: admin
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+    enabled: true

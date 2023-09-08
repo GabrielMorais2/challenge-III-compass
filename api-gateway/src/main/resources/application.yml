@@ -1,0 +1,60 @@
+server:
+  port: 9090
+  servlet:
+    context-path: /
+
+springdoc:
+  enable-native-support: true
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    config-url: /v3/api-docs/swagger-config
+    urls:
+      - url: /v3/api-docs
+        name: API Gateway Service
+      - url: /ms-cars/v3/api-docs
+        name: Car Service
+      - url: /ms-races/v3/api-docs
+        name: Races Service
+      - url: /ms-history/v3/api-docs
+        name: History Service
+
+spring:
+  profiles:
+    active:
+      - ${ACTIVE_SPRING_PROFILE:dev}
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: MS-CARS
+          uri: lb://MS-CARS
+          predicates:
+            - Path=/v1/cars/**,/ms-cars/v3/api-docs
+
+        - id: MS-HISTORY
+          uri: lb://MS-HISTORY
+          predicates:
+            - Path=/v1/history/**,/ms-history/v3/api-docs
+
+        - id: MS-RACES
+          uri: lb://MS-RACES
+          predicates:
+            - Path=/v1/races/**,/v1/tracks/**,/ms-races/v3/api-docs
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+    enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

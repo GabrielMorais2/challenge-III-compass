@@ -1,0 +1,42 @@
+server:
+  port: 8100
+  servlet:
+    context-path: /
+
+openapi:
+  service:
+    title: ms-cars
+    version: 1.0.0
+    url: http://localhost:9090
+springdoc:
+  api-docs:
+    path: /ms-cars/v3/api-docs
+  swagger-ui:
+    path: /ms-cars/swagger-ui.html
+
+spring:
+  application:
+    name: MS-CARS
+
+  sql.init.mode: always
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_DB:localhost}:${DB_PORT:5433}/${POSTGRES_DB:db_ms-car}
+    username: ${POSTGRES_USER:root}
+    password: ${POSTGRES_PASSWORD:root}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show_sql: true
+    defer-datasource-initialization: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+    enabled: true
+
