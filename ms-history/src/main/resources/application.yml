@@ -1,5 +1,18 @@
 server:
   port: 8150
+  servlet:
+    context-path: /
+
+openapi:
+  service:
+    title: ms-history
+    version: 1.0.0
+    url: http://localhost:9090
+springdoc:
+  api-docs:
+    path: /ms-history/v3/api-docs
+  swagger-ui:
+    path: /ms-history/swagger-ui.html
 
 spring:
   application:
