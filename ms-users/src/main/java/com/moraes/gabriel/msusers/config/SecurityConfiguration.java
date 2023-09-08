@@ -37,12 +37,24 @@ public class SecurityConfiguration {
             .authorizeHttpRequests(authorize -> authorize
                     .requestMatchers("/v1/users/register",
                             "/v1/users/login",
-                            "/v1/users/validate")
+                            "/v1/users/validate",
+                            "/v2/api-docs",
+                            "/v3/api-docs",
+                            "/v3/api-docs/**",
+                            "/swagger-resources",
+                            "/swagger-resources/**",
+                            "/configuration/ui",
+                            "/configuration/security",
+                            "/swagger-ui/**",
+                            "/webjars/**",
+                            "/swagger-ui.html",
+                            "/ms-users/v3/api-docs")
                     .permitAll()
                     .anyRequest()
                     .authenticated())
-            .sessionManagement(session -> session
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider())
             .csrf(AbstractHttpConfigurer::disable);
         return http.build();
     }
