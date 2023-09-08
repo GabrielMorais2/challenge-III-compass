@@ -15,11 +15,13 @@ springdoc:
       - url: /v3/api-docs
         name: API Gateway Service
       - url: /ms-cars/v3/api-docs
-        name: Car Service
+        name: ms-cars
       - url: /ms-races/v3/api-docs
-        name: Races Service
+        name: ms-races
       - url: /ms-history/v3/api-docs
-        name: History Service
+        name: ms-history
+      - url: /ms-users/v3/api-docs
+        name: ms-users
 
 spring:
   profiles:
@@ -34,16 +36,30 @@ spring:
           uri: lb://MS-CARS
           predicates:
             - Path=/v1/cars/**,/ms-cars/v3/api-docs
+          filters:
+            - AuthenticationFilter
+
 
         - id: MS-HISTORY
           uri: lb://MS-HISTORY
           predicates:
             - Path=/v1/history/**,/ms-history/v3/api-docs
+          filters:
+            - AuthenticationFilter
 
         - id: MS-RACES
           uri: lb://MS-RACES
           predicates:
             - Path=/v1/races/**,/v1/tracks/**,/ms-races/v3/api-docs
+          filters:
+            - AuthenticationFilter
+
+        - id: MS-USERS
+          uri: lb://MS-USERS
+          predicates:
+            - Path=/v1/users/**,/ms-users/v3/api-docs
+
+
 
 eureka:
   client:
@@ -58,3 +74,10 @@ management:
     web:
       exposure:
         include: '*'
+
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+
+
