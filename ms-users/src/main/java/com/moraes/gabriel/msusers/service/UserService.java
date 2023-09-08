@@ -2,11 +2,15 @@ package com.moraes.gabriel.msusers.service;
 
 import com.moraes.gabriel.msusers.exception.EmailAlreadyExistsException;
 import com.moraes.gabriel.msusers.model.UserCredential;
+import com.moraes.gabriel.msusers.model.payload.UserAuthenticateRequest;
 import com.moraes.gabriel.msusers.model.payload.UserRequest;
 import com.moraes.gabriel.msusers.model.payload.UserResponse;
 import com.moraes.gabriel.msusers.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +19,8 @@ import org.springframework.stereotype.Service;
 public class UserService {
     
     private final UserRepository userRepository;
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
     private final ModelMapper mapper;
     private final PasswordEncoder encoder;
 
@@ -28,10 +34,40 @@ public class UserService {
         return mapper.map(userRepository.save(user), UserResponse.class);
     }
 
+    public String authenticate(UserAuthenticateRequest userAuthenticateRequest) {
+
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        userAuthenticateRequest.getEmail(),
+                        userAuthenticateRequest.getPassword()
+                )
+        );
+
+        UserCredential user = userRepository.findByEmail(userAuthenticateRequest.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        return jwtService.generateToken(user.getName());
+    }
+
     public void validateEmailUniqueness(String email) {
         if (userRepository.existsByEmail(email)) {
             throw new EmailAlreadyExistsException("Email already exists: " + email);
         }
+    }
+
+    public boolean validateToken(String token) {
+        try{
+            jwtService.validateToken(token);
+            return true;
+        }catch (Exception e) {
+            return false;
+        }
+    }
+    public String extractToken(String authorizationHeader) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            return authorizationHeader.substring(7);
+        }
+        return null;
     }
 
 }
