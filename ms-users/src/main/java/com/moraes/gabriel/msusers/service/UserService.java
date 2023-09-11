@@ -46,28 +46,13 @@ public class UserService {
         UserCredential user = userRepository.findByEmail(userAuthenticateRequest.getEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        return jwtService.generateToken(user.getName());
+        return jwtService.generateToken(user.getEmail());
     }
 
     public void validateEmailUniqueness(String email) {
         if (userRepository.existsByEmail(email)) {
             throw new EmailAlreadyExistsException("Email already exists: " + email);
         }
-    }
-
-    public boolean validateToken(String token) {
-        try{
-            jwtService.validateToken(token);
-            return true;
-        }catch (Exception e) {
-            return false;
-        }
-    }
-    public String extractToken(String authorizationHeader) {
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            return authorizationHeader.substring(7);
-        }
-        return null;
     }
 
 }

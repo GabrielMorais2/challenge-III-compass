@@ -69,8 +69,6 @@ public class RacesService {
 
     private void simulateRace(Race race) {
         for (int lap = 0; lap < NUM_LAPS; lap++) {
-            race.getCars().sort(Comparator.comparingInt(CarResponse::getPosition).reversed());
-
             for (CarResponse car : race.getCars()) {
                 log.info("Piloto: " + car.getPilot().getName() +
                         " Posição atual: " + car.getPosition() +
@@ -90,6 +88,7 @@ public class RacesService {
                     nextCar.setPosition(tempPosition);
                 }
             }
+            race.getCars().sort(Comparator.comparingInt(CarResponse::getPosition).reversed());
         }
     }
 }

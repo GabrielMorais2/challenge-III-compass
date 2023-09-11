@@ -32,14 +32,5 @@ public class UserController {
         return ResponseEntity.ok().headers(headers).body("Successfully authenticated user");
     }
 
-    @GetMapping("/validate")
-    public ResponseEntity<String> validateToken(@RequestHeader("Authorization") String authorizationHeader) {
-        String token = userService.extractToken(authorizationHeader);
-        if (userService.validateToken(token)) {
-            return ResponseEntity.ok("Token is valid");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token is not valid");
-        }
-    }
 }
 

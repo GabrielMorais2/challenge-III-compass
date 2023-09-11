@@ -18,14 +18,9 @@ public class JwtService {
     @Value("${application.security.jwt.secret-key}")
     private String SECRET;
 
-    public void validateToken(final String token) {
-        Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token);
-    }
-
-
-    public String generateToken(String userName) {
+    public String generateToken(String email) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userName);
+        return createToken(claims, email);
     }
 
     private String createToken(Map<String, Object> claims, String userName) {
