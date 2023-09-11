@@ -143,7 +143,7 @@ class CarServiceTest {
         Car carUpdate = new Car();
         carUpdate.setBrand("Updated Brand");
         carUpdate.setModel("Updated Model");
-        carUpdate.setYear("Updated Year");
+        //carUpdate.setYear("2000");
 
         when(carRepository.findById(anyLong())).thenReturn(Optional.ofNullable(car));
         when(carRepository.save(any(Car.class))).thenReturn(carUpdate);
