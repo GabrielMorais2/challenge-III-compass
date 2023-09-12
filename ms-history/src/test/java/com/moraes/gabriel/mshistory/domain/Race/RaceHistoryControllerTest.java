@@ -44,7 +44,7 @@ class RaceHistoryControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(raceResponse.getId()))
-                .andExpect(jsonPath("$[0].name").value(raceResponse.getName()));
+                .andExpect(jsonPath("$[0].raceResult.name").value(raceResponse.getRaceResult().getName()));
     }
 
     @Test
@@ -58,6 +58,6 @@ class RaceHistoryControllerTest {
                     .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(raceResponse.getId()))
-                .andExpect(jsonPath("$.name").value(raceResponse.getName()));
+                .andExpect(jsonPath("$.raceResult.name").value(raceResponse.getRaceResult().getName()));
     }
 }

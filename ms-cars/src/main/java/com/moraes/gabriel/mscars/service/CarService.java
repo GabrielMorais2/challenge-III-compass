@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,10 +24,9 @@ public class CarService {
     private final ModelMapper mapper;
 
     public CarResponse createCar(CarRequest carRequest) {
-        Car car = mapper .map(carRequest, Car.class);
+        Car car = mapper.map(carRequest, Car.class);
         validateCarAndPilot(car);
         return mapper.map(carRepository.save(car), CarResponse.class);
-
     }
 
     public CarResponse getCarById(Long id) {
@@ -72,7 +72,7 @@ public class CarService {
         return mapper.map(carRepository.save(updatedCar), CarResponse.class);
     }
 
-    private boolean isCarExists(String brand, String model, String year) {
+    private boolean isCarExists(String brand, String model, Date year) {
         return carRepository.existsByBrandAndModelAndYear(brand, model, year);
     }
 

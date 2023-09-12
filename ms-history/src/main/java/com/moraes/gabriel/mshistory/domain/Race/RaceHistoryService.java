@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,12 +17,9 @@ public class RaceHistoryService {
     private final ModelMapper mapper;
 
     public void saveRaceData(RaceResultResponse raceResultResponse) {
-        LocalDateTime currentDateTime = LocalDateTime.now();
-
         RaceResult raceResult = new RaceResult();
-        raceResult.setName(raceResultResponse.getName());
-        raceResult.setCars(raceResultResponse.getCars());
-        raceResult.setCreatedAt(currentDateTime);
+        raceResult.setRaceResult(raceResultResponse);
+        raceResult.setCreatedAt(new Date());
 
         raceHistoryRepository.save(raceResult);
     }

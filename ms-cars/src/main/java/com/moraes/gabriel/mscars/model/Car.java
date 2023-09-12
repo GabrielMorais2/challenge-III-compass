@@ -1,9 +1,12 @@
 package com.moraes.gabriel.mscars.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -19,5 +22,7 @@ public class Car {
 
     @Embedded
     private Pilot pilot;
-    private String year;
+
+    @JsonFormat(pattern = "yyyy")
+    private Date year;
 }

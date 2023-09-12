@@ -1,95 +1,103 @@
 {
-  "id": "64fa2395cb175063c614795e",
-  "name": "corrida x",
-  "createdAt": "2023-09-07T16:25:09.313",
-  "cars": [
-    {
-      "id": 6,
-      "brand": "BMW",
-      "model": "X5",
-      "pilot": {
-        "name": "Olivia Martinez",
-        "age": 29
+  "id": "64ffbececb7b08375c0a92ce",
+  "createdAt": "2023-09-12",
+  "raceResult": {
+    "name": "corrida x",
+    "cars": [
+      {
+        "id": 719,
+        "brand": "Volvo",
+        "model": "XC90",
+        "pilot": {
+          "name": "Sophia Lee",
+          "age": 30
+        },
+        "year": "2023",
+        "position": 1
       },
-      "year": "2022",
-      "position": 8
-    },
-    {
-      "id": 2,
-      "brand": "Ford",
-      "model": "Mustang",
-      "pilot": {
-        "name": "Jane Smith",
-        "age": 28
+      {
+        "id": 312,
+        "brand": "Mazda",
+        "model": "CX-5",
+        "pilot": {
+          "name": "Ava Hall",
+          "age": 25
+        },
+        "year": "2022",
+        "position": 2
       },
-      "year": "2022",
-      "position": 7
-    },
-    {
-      "id": 15,
-      "brand": "Lexus",
-      "model": "RX",
-      "pilot": {
-        "name": "Oliver Harris",
-        "age": 28
+      {
+        "id": 222,
+        "brand": "Mazda",
+        "model": "CX-5",
+        "pilot": {
+          "name": "Ava Hall",
+          "age": 25
+        },
+        "year": "2022",
+        "position": 3
       },
-      "year": "2023",
-      "position": 5
-    },
-    {
-      "id": 1,
-      "brand": "Toyota",
-      "model": "Corolla",
-      "pilot": {
-        "name": "John Doe",
-        "age": 35
+      {
+        "id": 183,
+        "brand": "Chevrolet",
+        "model": "Camaro",
+        "pilot": {
+          "name": "David Johnson",
+          "age": 30
+        },
+        "year": "2022",
+        "position": 4
       },
-      "year": "2022",
-      "position": 6
-    },
-    {
-      "id": 8,
-      "brand": "Audi",
-      "model": "A4",
-      "pilot": {
-        "name": "Sophia White",
-        "age": 28
+      {
+        "id": 501,
+        "brand": "BMW",
+        "model": "X5",
+        "pilot": {
+          "name": "Olivia Martinez",
+          "age": 29
+        },
+        "year": "2022",
+        "position": 5
       },
-      "year": "2022",
-      "position": 3
-    },
-    {
-      "id": 10,
-      "brand": "Hyundai",
-      "model": "Elantra",
-      "pilot": {
-        "name": "Emma Turner",
-        "age": 32
+      {
+        "id": 576,
+        "brand": "BMW",
+        "model": "X5",
+        "pilot": {
+          "name": "Olivia Martinez",
+          "age": 29
+        },
+        "year": "2022",
+        "position": 6
       },
-      "year": "2022",
-      "position": 2
-    },
-    {
-      "id": 13,
-      "brand": "Subaru",
-      "model": "Outback",
-      "pilot": {
-        "name": "Noah Brown",
-        "age": 33
+      {
+        "id": 403,
+        "brand": "Subaru",
+        "model": "Outback",
+        "pilot": {
+          "name": "Noah Brown",
+          "age": 33
+        },
+        "year": "2023",
+        "position": 7
       },
-      "year": "2023",
-      "position": 4
-    },
-    {
-      "id": 11,
-      "brand": "Kia",
-      "model": "Sportage",
-      "pilot": {
-        "name": "William Clark",
-        "age": 29
-      },
-      "year": "2022",
-      "position": 1
+      {
+        "id": 672,
+        "brand": "Mazda",
+        "model": "CX-5",
+        "pilot": {
+          "name": "Ava Hall",
+          "age": 25
+        },
+        "year": "2022",
+        "position": 8
+      }
+    ],
+    "dateRace": "2023-09-12",
+    "track": {
+      "id": "64ffacd4f0d5e31798543a4b",
+      "name": "teste",
+      "country": "Brasil"
     }
-  ]
+  }
 }

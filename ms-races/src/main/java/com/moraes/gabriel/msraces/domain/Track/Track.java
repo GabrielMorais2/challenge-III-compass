@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDate;
-
 
 @Data
 @AllArgsConstructor
@@ -20,6 +18,5 @@ public class Track {
     private String id;
     private String name;
     private String country;
-    private LocalDate date;
 
 }

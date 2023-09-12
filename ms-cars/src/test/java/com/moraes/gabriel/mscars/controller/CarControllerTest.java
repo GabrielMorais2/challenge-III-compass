@@ -13,6 +13,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Date;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -46,18 +47,17 @@ class CarControllerTest {
         when(carService.createCar(carRequest)).thenReturn(carResponse);
 
         mockMvc.perform(post("/v1/cars")
-                        .content(objectMapper.writeValueAsString(carResponse))
+                        .content(objectMapper.writeValueAsString(carRequest))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(carResponse.getId()))
                 .andExpect(jsonPath("$.brand").value(carResponse.getBrand()))
-                .andExpect(jsonPath("$.model").value(carResponse.getModel()))
-                .andExpect(jsonPath("$.year").value(carResponse.getYear()));
+                .andExpect(jsonPath("$.model").value(carResponse.getModel()));
     }
 
     @Test
     void createCar_withEmptyData_ReturnBadRequest() throws Exception {
-        CarRequest emptyCarDtoRequest = new CarRequest("", "", new PilotRequest(), "");
+        CarRequest emptyCarDtoRequest = new CarRequest("", "", new PilotRequest(), new Date());
 
         mockMvc.perform(post("/v1/cars")
                         .content(objectMapper.writeValueAsString(emptyCarDtoRequest))
@@ -75,8 +75,7 @@ class CarControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(carResponse.getId()))
                 .andExpect(jsonPath("$.brand").value(carResponse.getBrand()))
-                .andExpect(jsonPath("$.model").value(carResponse.getModel()))
-                .andExpect(jsonPath("$.year").value(carResponse.getYear()));
+                .andExpect(jsonPath("$.model").value(carResponse.getModel()));
     }
 
     @Test
@@ -90,8 +89,7 @@ class CarControllerTest {
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(carResponse.getId()))
                 .andExpect(jsonPath("$[0].brand").value(carResponse.getBrand()))
-                .andExpect(jsonPath("$[0].model").value(carResponse.getModel()))
-                .andExpect(jsonPath("$[0].year").value(carResponse.getYear()));
+                .andExpect(jsonPath("$[0].model").value(carResponse.getModel()));
     }
 
     @Test
