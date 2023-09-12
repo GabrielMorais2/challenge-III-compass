@@ -5,10 +5,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/tracks")
@@ -25,5 +24,23 @@ public class TrackController {
     public ResponseEntity<TrackResponse> createTrack(@Valid @RequestBody TrackRequest trackRequest){
         return new ResponseEntity<>(trackService.createTrack(trackRequest), HttpStatus.CREATED);
     }
+
+
+    @Operation(
+            summary = "Get a Track by ID",
+            description = "Retrieve details of a specific track based on its ID."
+    )@GetMapping("/{id}")
+    public ResponseEntity<TrackResponse> getCarById(@PathVariable String id) {
+        return new ResponseEntity<>(trackService.getTrackResponseById(id), HttpStatus.OK);
+    }
+
+    @Operation(
+            summary = "Get All Tracks",
+            description = "Retrieve a list of all available tracks."
+    )@GetMapping
+    public ResponseEntity<List<TrackResponse>> getAllCars() {
+        return new ResponseEntity<>(trackService.getAllTracks(), HttpStatus.OK);
+    }
+
 
 }

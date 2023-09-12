@@ -41,7 +41,7 @@ public class RaceSimulationService {
                 CarResponse car = race.getCars().get(i);
                 CarResponse nextCar = race.getCars().get(i + 1);
 
-                if (!overtaken && car.getSpeed() > nextCar.getSpeed() && (car.getPosition() < nextCar.getPosition())) {
+                if (!overtaken && car.getSpeed() > nextCar.getSpeed() && (car.getPosition() > nextCar.getPosition())) {
                     log.info("Troca de posição: " + car.getPilot().getName() +
                             " de " + car.getPosition() + " para " + nextCar.getPosition());
                     int tempPosition = car.getPosition();
