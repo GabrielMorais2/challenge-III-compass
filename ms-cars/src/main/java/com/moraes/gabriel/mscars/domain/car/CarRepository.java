@@ -7,6 +7,5 @@ import java.util.Date;
 
 @Repository
 public interface CarRepository extends JpaRepository<Car, Long> {
-    boolean existsByBrandAndModelAndYear(String brand, String model, Date year);
-    boolean existsByPilotNameAndPilotAge(String name, Integer age);
+
 }
