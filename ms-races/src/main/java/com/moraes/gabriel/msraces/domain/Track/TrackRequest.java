@@ -19,10 +19,4 @@ public class TrackRequest {
     private String name;
     @NotBlank
     private String country;
-
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @JsonPropertyDescription("The accepted date format is yyyy-MM-dd")
-    @NotNull
-    private LocalDate date;
-
 }

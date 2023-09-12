@@ -20,6 +20,5 @@ public class Track {
     private String id;
     private String name;
     private String country;
-    private LocalDate date;
 
 }

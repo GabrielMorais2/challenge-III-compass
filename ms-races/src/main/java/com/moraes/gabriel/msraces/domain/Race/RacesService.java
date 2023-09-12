@@ -10,10 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
 import static com.moraes.gabriel.msraces.config.AppConfig.NUM_LAPS;
 import static com.moraes.gabriel.msraces.domain.Track.validations.Validations.validateNumCars;
@@ -51,13 +49,14 @@ public class RacesService {
         List<CarResponse> selectedCars = getRandomCarsForRace(request.getNumCars());
         setInitialCarPositions(selectedCars);
 
-        Race race = new Race(request.getName(), selectedCars, track);
+        Race race = new Race(request.getName(), selectedCars, track, new Date());
 
         simulateRace(race);
 
         RaceResultResponse raceResultResponse = new RaceResultResponse();
         raceResultResponse.setCars(race.getCars());
         raceResultResponse.setName(race.getName());
+        raceResultResponse.setDateRace(race.getDate());
 
         try {
             messageProducer.publish(raceResultResponse);
@@ -76,19 +75,24 @@ public class RacesService {
                 car.increaseSpeed();
             }
 
+            boolean overtaken = false;
+
             for (int i = 0; i < race.getCars().size() - 1; i++) {
                 CarResponse car = race.getCars().get(i);
                 CarResponse nextCar = race.getCars().get(i + 1);
 
-                if (car.getSpeed() > nextCar.getSpeed()) {
+                if (!overtaken && car.getSpeed() > nextCar.getSpeed() && (car.getPosition() < nextCar.getPosition())) {
                     log.info("Troca de posição: " + car.getPilot().getName() +
                             " de " + car.getPosition() + " para " + nextCar.getPosition());
                     int tempPosition = car.getPosition();
                     car.setPosition(nextCar.getPosition());
                     nextCar.setPosition(tempPosition);
+                    overtaken = true;
+                } else {
+                    overtaken = false;
                 }
             }
-            race.getCars().sort(Comparator.comparingInt(CarResponse::getPosition).reversed());
+            race.getCars().sort(Comparator.comparingInt(CarResponse::getPosition));
         }
     }
 }

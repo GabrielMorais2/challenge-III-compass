@@ -1,9 +1,12 @@
 package com.moraes.gabriel.msraces.Client;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -14,7 +17,10 @@ public class CarResponse {
     private String brand;
     private String model;
     private PilotResponse pilot;
-    private String year;
+
+    @JsonFormat(pattern = "yyyy")
+    private Date year;
+
     private int position;
 
     @JsonIgnore
