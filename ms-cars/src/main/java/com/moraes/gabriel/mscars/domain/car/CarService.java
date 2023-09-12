@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,4 +60,14 @@ public class CarService {
         return mapper.map(carRepository.save(updatedCar), CarResponse.class);
     }
 
+    public List<CarResponse> getRandomCars(int limit) {
+        List<CarResponse> allCars = getAllCars();
+
+        if (limit >= allCars.size()) {
+            return allCars;
+        } else {
+            Collections.shuffle(allCars);
+            return allCars.subList(0, limit);
+        }
+    }
 }

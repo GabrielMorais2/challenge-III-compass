@@ -44,6 +44,16 @@ public class CarController {
     }
 
     @Operation(
+            summary = "Get Random Cars",
+            description = "Retrieve a list of randomly selected cars, optionally specifying a limit."
+    )
+    @GetMapping("/limit")
+    public ResponseEntity<List<CarResponse>> getRandomCars(@RequestParam(name = "limit", defaultValue = "10") int limit) {
+        return new ResponseEntity<>(carService.getRandomCars(limit), HttpStatus.OK);
+    }
+
+
+    @Operation(
             summary = "Delete a Car by ID",
             description = "Delete a specific car based on its ID."
     )

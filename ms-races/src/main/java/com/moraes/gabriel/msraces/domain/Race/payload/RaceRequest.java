@@ -1,10 +1,14 @@
-package com.moraes.gabriel.msraces.domain.Race;
+package com.moraes.gabriel.msraces.domain.Race.payload;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.moraes.gabriel.msraces.domain.Race.RaceStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -15,6 +19,9 @@ public class RaceRequest {
     private String name;
     @NotNull
     private String idTrack;
-    @NotNull
-    private int numCars;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date date;
+
+    private RaceStatus status;
 }

@@ -24,12 +24,21 @@ public class ExceptionHandlerController {
     }
 
     @ExceptionHandler(ObjectNotFoundException.class)
-    public ResponseEntity<ErrorResponse> objectNotFoundException(Exception ex) {
+    public ResponseEntity<ErrorResponse> objectNotFoundException(ObjectNotFoundException ex) {
         ErrorResponse message = new ErrorResponse(
                 HttpStatus.NOT_FOUND.value(),
                 timestamp,
                 ex.getMessage());
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidStatusClassException.class)
+    public ResponseEntity<ErrorResponse> invalidStatusClassException(InvalidStatusClassException ex) {
+        ErrorResponse message = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                timestamp,
+                ex.getMessage());
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 
 }

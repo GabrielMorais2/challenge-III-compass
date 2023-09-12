@@ -1,4 +1,4 @@
-package com.moraes.gabriel.msraces.Client;
+package com.moraes.gabriel.msraces.domain.car.payload;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
