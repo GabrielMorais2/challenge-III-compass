@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.*;
 
 import static com.moraes.gabriel.msraces.config.AppConfig.NUM_LAPS;
@@ -57,6 +56,8 @@ public class RacesService {
         raceResultResponse.setCars(race.getCars());
         raceResultResponse.setName(race.getName());
         raceResultResponse.setDateRace(race.getDate());
+        raceResultResponse.setTrack(race.getTrack());
+
 
         try {
             messageProducer.publish(raceResultResponse);
