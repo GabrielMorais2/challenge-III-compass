@@ -32,9 +32,8 @@ public class RaceController {
             summary = "Start a Race",
             description = "Initiate a new race with the data provided in the race id. The race will be carried out automatically."
     )
-    public ResponseEntity<String> startRaces(@PathVariable String id) {
-        racesService.runRaces(id);
-        return new ResponseEntity<>("Race carried out successfully", HttpStatus.OK);
+    public ResponseEntity<RaceResponse> startRaces(@PathVariable String id) {
+        return new ResponseEntity<>(racesService.runRaces(id), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

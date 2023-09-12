@@ -54,7 +54,7 @@ public class RacesService {
     }
 
 
-    public void runRaces(String id) {
+    public RaceResponse runRaces(String id) {
         Race race =  mapper.map(getRaceById(id), Race.class);
         validateStatusRunRace(race);
         raceSimulationService.runRaces(race);
@@ -63,6 +63,7 @@ public class RacesService {
         raceResultPublisher.publishRaceResult(race);
 
         raceRepository.save(race);
+        return mapper.map(race, RaceResponse.class);
     }
 
     public List<RaceResponse> getAllRaces() {
