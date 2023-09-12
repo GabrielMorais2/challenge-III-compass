@@ -52,8 +52,8 @@ class RaceHistoryServiceTest {
 
         assertNotNull(raceResponse);
         assertEquals(raceResult.getId(), raceResponse.getId());
-        assertEquals(raceResult.getResultResponse().getName(), raceResponse.getResultRace().getName());
-        assertEquals(raceResult.getResultResponse().getCars(), raceResponse.getResultRace().getCars());
+        assertEquals(raceResult.getRaceResult().getName(), raceResponse.getRaceResult().getName());
+        assertEquals(raceResult.getRaceResult().getCars(), raceResponse.getRaceResult().getCars());
     }
 
     @Test
@@ -75,8 +75,8 @@ class RaceHistoryServiceTest {
 
         assertNotNull(raceResponses);
         assertEquals(1, raceResponses.size());
-        assertEquals(raceResult.getResultResponse().getName(), raceResponses.get(0).getResultRace().getName());
-        assertEquals(raceResult.getResultResponse().getCars(), raceResponses.get(0).getResultRace().getCars());
+        assertEquals(raceResult.getRaceResult().getName(), raceResponses.get(0).getRaceResult().getName());
+        assertEquals(raceResult.getRaceResult().getCars(), raceResponses.get(0).getRaceResult().getCars());
     }
 
 }
