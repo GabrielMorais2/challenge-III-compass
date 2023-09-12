@@ -1,8 +1,8 @@
-package com.moraes.gabriel.mscars.model.payload;
+package com.moraes.gabriel.mscars.domain.car.payload;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.moraes.gabriel.mscars.model.Pilot;
+import com.moraes.gabriel.mscars.domain.pilot.Pilot;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

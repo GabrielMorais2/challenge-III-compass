@@ -2,10 +2,11 @@ package com.moraes.gabriel.mscars.controller;
 
 import Utils.JsonUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.moraes.gabriel.mscars.model.payload.CarRequest;
-import com.moraes.gabriel.mscars.model.payload.CarResponse;
-import com.moraes.gabriel.mscars.model.payload.PilotRequest;
-import com.moraes.gabriel.mscars.service.CarService;
+import com.moraes.gabriel.mscars.domain.car.CarController;
+import com.moraes.gabriel.mscars.domain.car.CarService;
+import com.moraes.gabriel.mscars.domain.car.payload.CarRequest;
+import com.moraes.gabriel.mscars.domain.car.payload.CarResponse;
+import com.moraes.gabriel.mscars.domain.pilot.payload.PilotRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

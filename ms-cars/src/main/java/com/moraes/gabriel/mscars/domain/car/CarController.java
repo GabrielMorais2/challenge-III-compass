@@ -1,8 +1,7 @@
-package com.moraes.gabriel.mscars.controller;
+package com.moraes.gabriel.mscars.domain.car;
 
-import com.moraes.gabriel.mscars.model.payload.CarRequest;
-import com.moraes.gabriel.mscars.model.payload.CarResponse;
-import com.moraes.gabriel.mscars.service.CarService;
+import com.moraes.gabriel.mscars.domain.car.payload.CarRequest;
+import com.moraes.gabriel.mscars.domain.car.payload.CarResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
