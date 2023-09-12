@@ -1,19 +1,21 @@
 package com.moraes.gabriel.msraces.domain.Race;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.moraes.gabriel.msraces.Client.CarResponse;
-import com.moraes.gabriel.msraces.Client.CarsFeignClient;
+import com.moraes.gabriel.msraces.domain.Race.payload.RaceRequest;
+import com.moraes.gabriel.msraces.domain.Race.payload.RaceResponse;
 import com.moraes.gabriel.msraces.domain.Track.Track;
 import com.moraes.gabriel.msraces.domain.Track.TrackService;
-import com.moraes.gabriel.msraces.rabbitmq.RabbitMQMessageProducer;
+import com.moraes.gabriel.msraces.domain.car.CarService;
+import com.moraes.gabriel.msraces.domain.car.payload.CarResponse;
+import com.moraes.gabriel.msraces.exception.ObjectNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import static com.moraes.gabriel.msraces.config.AppConfig.NUM_LAPS;
-import static com.moraes.gabriel.msraces.domain.Track.validations.Validations.validateNumCars;
+import static com.moraes.gabriel.msraces.domain.Race.validations.RaceValidations.validateStatusRunRace;
 
 
 @Service
@@ -21,79 +23,53 @@ import static com.moraes.gabriel.msraces.domain.Track.validations.Validations.va
 @Slf4j
 public class RacesService {
 
-    private final CarsFeignClient carsFeignClient;
-    private final RabbitMQMessageProducer messageProducer;
+    private final CarService carService;
     private final TrackService trackService;
+    private final RaceSimulationService raceSimulationService;
+    private final RaceResultPublisher raceResultPublisher;
+    private final RaceRepository raceRepository;
+    private final ModelMapper mapper;
 
-    public List<CarResponse> getRandomCarsForRace(int numCars) {
-        List<CarResponse> allCars = carsFeignClient.getAllCars();
-        int maxCars = Math.min(numCars, allCars.size());
 
-        List<CarResponse> selectedCars = new ArrayList<>(allCars);
-        Collections.shuffle(selectedCars);
-
-        return selectedCars.subList(0, maxCars);
+    public RaceResponse getRaceById(String id) {
+        Race race = raceRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Race not found with id: " + id));
+        return mapper.map(race, RaceResponse.class);
     }
 
-    private void setInitialCarPositions(List<CarResponse> cars) {
-        for (int i = 0; i < cars.size(); i++) {
-            cars.get(i).setPosition(i + 1);
-        }
+
+    public RaceResponse createRaces(RaceRequest raceRequest) {
+        Track track = trackService.getTrackById(raceRequest.getIdTrack());
+        List<CarResponse> randomCars = carService.getRandomCarsForRace();
+
+        Race race = Race.builder()
+                .track(track)
+                .cars(randomCars)
+                .name(track.getName())
+                .date(raceRequest.getDate())
+                .status(RaceStatus.CREATED)
+                .build();
+
+        return mapper.map(raceRepository.save(race), RaceResponse.class);
     }
 
-    public void runRaces(RaceRequest request) {
-        validateNumCars(request.getNumCars());
 
-        Track track = trackService.getTrackById(request.getIdTrack());
-        List<CarResponse> selectedCars = getRandomCarsForRace(request.getNumCars());
-        setInitialCarPositions(selectedCars);
+    public void runRaces(String id) {
+        Race race =  mapper.map(getRaceById(id), Race.class);
+        validateStatusRunRace(race);
+        raceSimulationService.runRaces(race);
 
-        Race race = new Race(request.getName(), selectedCars, track, new Date());
+        race.setStatus(RaceStatus.FINISHED);
+        raceResultPublisher.publishRaceResult(race);
 
-        simulateRace(race);
-
-        RaceResultResponse raceResultResponse = new RaceResultResponse();
-        raceResultResponse.setCars(race.getCars());
-        raceResultResponse.setName(race.getName());
-        raceResultResponse.setDateRace(race.getDate());
-        raceResultResponse.setTrack(race.getTrack());
-
-
-        try {
-            messageProducer.publish(raceResultResponse);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-
+        raceRepository.save(race);
     }
 
-    private void simulateRace(Race race) {
-        for (int lap = 0; lap < NUM_LAPS; lap++) {
-            for (CarResponse car : race.getCars()) {
-                log.info("Piloto: " + car.getPilot().getName() +
-                        " Posição atual: " + car.getPosition() +
-                        " Velocidade: " + car.getSpeed());
-                car.increaseSpeed();
-            }
+    public List<RaceResponse> getAllRaces() {
+        List<Race> races = raceRepository.findAll();
+        return races.stream()
+                .map(race -> mapper.map(race, RaceResponse.class))
+                .collect(Collectors.toList());
 
-            boolean overtaken = false;
-
-            for (int i = 0; i < race.getCars().size() - 1; i++) {
-                CarResponse car = race.getCars().get(i);
-                CarResponse nextCar = race.getCars().get(i + 1);
-
-                if (!overtaken && car.getSpeed() > nextCar.getSpeed() && (car.getPosition() < nextCar.getPosition())) {
-                    log.info("Troca de posição: " + car.getPilot().getName() +
-                            " de " + car.getPosition() + " para " + nextCar.getPosition());
-                    int tempPosition = car.getPosition();
-                    car.setPosition(nextCar.getPosition());
-                    nextCar.setPosition(tempPosition);
-                    overtaken = true;
-                } else {
-                    overtaken = false;
-                }
-            }
-            race.getCars().sort(Comparator.comparingInt(CarResponse::getPosition));
-        }
     }
 }

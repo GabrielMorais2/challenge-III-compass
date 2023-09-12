@@ -1,13 +1,12 @@
-package com.moraes.gabriel.msraces.domain.Race;
+package com.moraes.gabriel.msraces.domain.Race.payload;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.moraes.gabriel.msraces.domain.Race.RaceStatus;
 import com.moraes.gabriel.msraces.domain.Track.Track;
 import com.moraes.gabriel.msraces.domain.car.payload.CarResponse;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 import java.util.List;
@@ -15,16 +14,15 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "race")
-@Builder
-public class Race {
+public class RaceResponse {
 
     private String id;
     private String name;
-    private List<CarResponse> cars;
-    private Track track;
+    private RaceStatus status;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date date;
-    private RaceStatus status;
+    private Track track;
+    private List<CarResponse> cars;
+
 
 }
