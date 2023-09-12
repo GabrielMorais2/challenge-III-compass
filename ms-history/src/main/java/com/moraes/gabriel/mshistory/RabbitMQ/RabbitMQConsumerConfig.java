@@ -23,6 +23,7 @@ public class RabbitMQConsumerConfig {
     @RabbitListener(queues = "SEND-RACE-RESULT-RESPONSE")
     public void receiveRaceData(String raceResultResponse) throws IOException {
         log.info("RECEBENDO OS DADOS");
+        log.info(raceResultResponse);
         RaceResultResponse raceResultResponsByMsRaces = objectMapper.readValue(raceResultResponse, RaceResultResponse.class );
         log.info("MAPEANDO OS DADOS");
         raceHistoryService.saveRaceData(raceResultResponsByMsRaces);

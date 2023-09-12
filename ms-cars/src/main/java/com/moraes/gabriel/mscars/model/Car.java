@@ -23,6 +23,6 @@ public class Car {
     @Embedded
     private Pilot pilot;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy")
     private Date year;
 }
