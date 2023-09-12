@@ -1,4 +1,4 @@
-package com.moraes.gabriel.msraces.config;
+package com.moraes.gabriel.msusers.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.models.Components;
@@ -36,4 +36,5 @@ public class OpenApiConfigs {
                 .security(List.of(new SecurityRequirement().addList(securitySchemeName)))
                 .info(new Info().title(serviceTitle).version(serviceVersion));
     }
+
 }
