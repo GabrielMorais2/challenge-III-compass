@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 import static com.moraes.gabriel.mscars.validations.validations.validateIdenticalCarsAndDrivers;
