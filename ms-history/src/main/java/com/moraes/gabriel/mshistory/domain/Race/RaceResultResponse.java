@@ -24,4 +24,6 @@ public class RaceResultResponse {
     private Date dateRace;
 
     private TrackResponse track;
+    private RaceStatus status;
+
 }
