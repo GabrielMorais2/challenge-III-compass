@@ -1,4 +1,4 @@
-package com.moraes.gabriel.mscars.model;
+package com.moraes.gabriel.mscars.domain.pilot;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;

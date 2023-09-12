@@ -1,6 +1,7 @@
-package com.moraes.gabriel.mscars.model.payload;
+package com.moraes.gabriel.mscars.domain.car.payload;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.moraes.gabriel.mscars.domain.pilot.payload.PilotRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

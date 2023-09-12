@@ -1,4 +1,4 @@
-package com.moraes.gabriel.mscars.model.payload;
+package com.moraes.gabriel.mscars.domain.pilot.payload;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

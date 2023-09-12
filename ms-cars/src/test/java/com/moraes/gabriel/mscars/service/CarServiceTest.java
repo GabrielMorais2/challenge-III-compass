@@ -1,13 +1,14 @@
 package com.moraes.gabriel.mscars.service;
 
 import Utils.JsonUtils;
+import com.moraes.gabriel.mscars.domain.car.Car;
+import com.moraes.gabriel.mscars.domain.car.CarRepository;
+import com.moraes.gabriel.mscars.domain.car.CarService;
+import com.moraes.gabriel.mscars.domain.car.payload.CarRequest;
+import com.moraes.gabriel.mscars.domain.car.payload.CarResponse;
 import com.moraes.gabriel.mscars.exception.CarAlreadyExistsException;
 import com.moraes.gabriel.mscars.exception.CarNotFoundException;
 import com.moraes.gabriel.mscars.exception.PilotAlreadyExistsException;
-import com.moraes.gabriel.mscars.model.Car;
-import com.moraes.gabriel.mscars.model.payload.CarRequest;
-import com.moraes.gabriel.mscars.model.payload.CarResponse;
-import com.moraes.gabriel.mscars.repository.CarRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -62,11 +63,7 @@ class CarServiceTest {
         Car car = JsonUtils.getObjectFromFile(CAR, Car.class);
         CarRequest carRequest = JsonUtils.getObjectFromFile(CAR_REQUEST, CarRequest.class);
 
-        when(carRepository.existsByBrandAndModelAndYear(
-                eq(car.getBrand()),
-                eq(car.getModel()),
-                eq(car.getYear())))
-                .thenReturn(true);
+        when(carRepository.findAll()).thenReturn(List.of(car));
 
         assertThrows(CarAlreadyExistsException.class, () -> {
             carService.createCar(carRequest);
@@ -78,10 +75,10 @@ class CarServiceTest {
         Car car = JsonUtils.getObjectFromFile(CAR, Car.class);
         CarRequest carRequest = JsonUtils.getObjectFromFile(CAR_REQUEST, CarRequest.class);
 
-        when(carRepository.existsByPilotNameAndPilotAge(
-                eq(car.getPilot().getName()),
-                eq(car.getPilot().getAge())))
-                .thenReturn(true);
+        car.setModel("new Model");
+        car.setBrand("new Brand");
+
+        when(carRepository.findAll()).thenReturn(List.of(car));
 
         assertThrows(PilotAlreadyExistsException.class, () -> {
             carService.createCar(carRequest);

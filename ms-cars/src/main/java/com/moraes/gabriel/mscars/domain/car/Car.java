@@ -1,6 +1,7 @@
-package com.moraes.gabriel.mscars.model;
+package com.moraes.gabriel.mscars.domain.car;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.moraes.gabriel.mscars.domain.pilot.Pilot;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
