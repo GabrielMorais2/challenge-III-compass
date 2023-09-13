@@ -30,8 +30,8 @@ class RaceHistoryServiceTest {
     @Spy
     private ModelMapper mapper;
 
-    private static final String RACE_RESULT_RESPONSE = "Payload/RACE_RESULT_RESPONSE.json";
-    private static final String RACE_RESULT = "Payload/RACE_RESPONSE.json";
+    private static final String RACE_RESULT_RESPONSE = "/Payload/RACE_RESULT_RESPONSE.json";
+    private static final String RACE_RESULT = "/Payload/RACE_RESPONSE.json";
 
     @Test
     void saveRaceData() throws IOException {
@@ -52,8 +52,8 @@ class RaceHistoryServiceTest {
 
         assertNotNull(raceResponse);
         assertEquals(raceResult.getId(), raceResponse.getId());
-        assertEquals(raceResult.getName(), raceResponse.getName());
-        assertEquals(raceResult.getCars(), raceResponse.getCars());
+        assertEquals(raceResult.getRaceResult().getName(), raceResponse.getRaceResult().getName());
+        assertEquals(raceResult.getRaceResult().getCars(), raceResponse.getRaceResult().getCars());
     }
 
     @Test
@@ -75,8 +75,8 @@ class RaceHistoryServiceTest {
 
         assertNotNull(raceResponses);
         assertEquals(1, raceResponses.size());
-        assertEquals(raceResult.getName(), raceResponses.get(0).getName());
-        assertEquals(raceResult.getCars(), raceResponses.get(0).getCars());
+        assertEquals(raceResult.getRaceResult().getName(), raceResponses.get(0).getRaceResult().getName());
+        assertEquals(raceResult.getRaceResult().getCars(), raceResponses.get(0).getRaceResult().getCars());
     }
 
 }

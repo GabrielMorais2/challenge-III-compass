@@ -4,9 +4,14 @@ server:
 spring:
   application:
     name: SERVICE-REGISTRY
+
 eureka:
   client:
     fetch-registry: false
     register-with-eureka: false
 
+management:
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/
 

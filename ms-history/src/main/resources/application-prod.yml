@@ -1,0 +1,46 @@
+server:
+  port: 8150
+  servlet:
+    context-path: /
+
+openapi:
+  service:
+    title: ms-history
+    version: 1.0.0
+    url: http://localhost:9090
+springdoc:
+  api-docs:
+    path: /ms-history/v3/api-docs
+  swagger-ui:
+    path: /ms-history/swagger-ui.html
+
+spring:
+  application:
+    name: MS-HISTORY
+  rabbitmq:
+    host:  ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_DEFAULT_USER:guest}
+    password: ${RABBITMQ_DEFAULT_PASS:guest}
+
+  data:
+    mongodb:
+      host: ${MONGO_HOST}
+      port: ${MONGO_PORT:27017}
+      database: ${MONGO_INITDB_DATABASE:db_ms-history}
+      username: ${MONGO_INITDB_ROOT_USERNAME:root}
+      password: ${MONGO_INITDB_ROOT_PASSWORD:root}
+      authentication-database: admin
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${EUREKA_SERVER:localhost}:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+    enabled: true
+
+management:
+  zipkin:
+    tracing:
+      endpoint: http://${ZIPKIN_HOST}:9411/api/v2/spans

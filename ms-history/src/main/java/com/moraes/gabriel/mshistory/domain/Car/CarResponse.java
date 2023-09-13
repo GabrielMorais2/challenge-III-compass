@@ -1,9 +1,12 @@
 package com.moraes.gabriel.mshistory.domain.Car;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -15,7 +18,10 @@ public class CarResponse {
     private String brand;
     private String model;
     private PilotResponse pilot;
-    private String year;
+
+    @JsonFormat(pattern = "yyyy")
+    private Date year;
+
     private int position;
 }
 

@@ -1,9 +1,0 @@
-{
-  "brand": "toyota",
-  "model": "Camry",
-  "pilot": {
-    "name": "Gabriel",
-    "age": 30
-  },
-  "year": "2022"
-}

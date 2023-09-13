@@ -11,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,9 +31,9 @@ class TrackServiceTest {
     @Spy
     private ModelMapper mapper;
 
-    private static final String TRACK = "Payload/track/TRACK.json";
-    private static final String TRACK_REQUEST = "Payload/track/TRACK_REQUEST.json";
-    private static final String TRACK_RESPONSE = "Payload/track/TRACK.json";
+    private static final String TRACK = "/Payload/track/TRACK.json";
+    private static final String TRACK_REQUEST = "/Payload/track/TRACK_REQUEST.json";
+    private static final String TRACK_RESPONSE = "/Payload/track/TRACK.json";
 
     @Test
     void getTrackById_WithExistingTrack_ReturnAnTrack() throws IOException {
@@ -41,6 +42,20 @@ class TrackServiceTest {
         when(trackRepository.findById(anyString())).thenReturn(Optional.of(track));
 
         Track response = trackService.getTrackById(anyString());
+
+        assertNotNull(response);
+        assertEquals(track.getId(), response.getId());
+        assertEquals(track.getName(), response.getName());
+        assertEquals(track.getCountry(), response.getCountry());
+    }
+
+    @Test
+    void getTrackResponseById_WithExistingTrack_ReturnAnTrack() throws IOException {
+        Track track = JsonUtils.getObjectFromFile(TRACK, Track.class);
+
+        when(trackRepository.findById(anyString())).thenReturn(Optional.of(track));
+
+        TrackResponse response = trackService.getTrackResponseById(anyString());
 
         assertNotNull(response);
         assertEquals(track.getId(), response.getId());
@@ -72,5 +87,18 @@ class TrackServiceTest {
         assertEquals(trackResponse.getCountry(), response.getCountry());
     }
 
+
+    @Test
+    void getAllTracks_ReturnAnListOfTracksResponse() throws IOException {
+        Track track = JsonUtils.getObjectFromFile(TRACK, Track.class);
+
+        when(trackRepository.findAll()).thenReturn(List.of(track));
+
+        List<TrackResponse> response = trackService.getAllTracks();
+
+        assertNotNull(response);
+        assertEquals(track.getId(), response.get(0).getId());
+        assertEquals(track.getName(), response.get(0).getName());
+    }
 
 }

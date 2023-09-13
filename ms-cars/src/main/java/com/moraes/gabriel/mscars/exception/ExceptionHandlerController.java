@@ -27,16 +27,16 @@ public class ExceptionHandlerController {
     }
 
     @ExceptionHandler(CarAlreadyExistsException.class)
-    public ResponseEntity<ErrorResponse> carAlreadyExistsException(Exception ex) {
+    public ResponseEntity<ErrorResponse> carAlreadyExistsException(CarAlreadyExistsException ex) {
         ErrorResponse message = new ErrorResponse(
                 HttpStatus.BAD_REQUEST.value(),
                 timestamp,
                 ex.getMessage());
-        return new ResponseEntity<>(message, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(PilotAlreadyExistsException.class)
-    public ResponseEntity<ErrorResponse> pilotAlreadyExistsException(Exception ex) {
+    public ResponseEntity<ErrorResponse> pilotAlreadyExistsException(PilotAlreadyExistsException ex) {
         ErrorResponse message = new ErrorResponse(
                 HttpStatus.BAD_REQUEST.value(),
                 timestamp,
@@ -45,7 +45,7 @@ public class ExceptionHandlerController {
     }
 
     @ExceptionHandler(CarNotFoundException.class)
-    public ResponseEntity<ErrorResponse> carNotFoundException(Exception ex) {
+    public ResponseEntity<ErrorResponse> carNotFoundException(CarNotFoundException ex) {
         ErrorResponse message = new ErrorResponse(
                 HttpStatus.NOT_FOUND.value(),
                 timestamp,

@@ -1,0 +1,112 @@
+{
+  "id": "64ffe621b02d9a02982b9661",
+  "name": "corrida x",
+  "status": "CREATED",
+  "date": "2024-08-12",
+  "track": {
+    "id": "64ffacd4f0d5e31798543a4b",
+    "name": "teste",
+    "country": "Brasil"
+  },
+  "cars": [
+    {
+      "id": 442,
+      "brand": "Mercedes-Benz",
+      "model": "E-Class",
+      "pilot": {
+        "name": "James Anderson",
+        "age": 31
+      },
+      "year": "2022",
+      "position": 0
+    },
+    {
+      "id": 891,
+      "brand": "BMW",
+      "model": "X5",
+      "pilot": {
+        "name": "Olivia Martinez",
+        "age": 29
+      },
+      "year": "2022",
+      "position": 0
+    },
+    {
+      "id": 54,
+      "brand": "Nissan",
+      "model": "Altima",
+      "pilot": {
+        "name": "Liam Lee",
+        "age": 27
+      },
+      "year": "2022",
+      "position": 0
+    },
+    {
+      "id": 828,
+      "brand": "Chevrolet",
+      "model": "Camaro",
+      "pilot": {
+        "name": "David Johnson",
+        "age": 30
+      },
+      "year": "2022",
+      "position": 0
+    },
+    {
+      "id": 138,
+      "brand": "Chevrolet",
+      "model": "Camaro",
+      "pilot": {
+        "name": "David Johnson",
+        "age": 30
+      },
+      "year": "2022",
+      "position": 0
+    },
+    {
+      "id": 868,
+      "brand": "Subaru",
+      "model": "Outback",
+      "pilot": {
+        "name": "Noah Brown",
+        "age": 33
+      },
+      "year": "2023",
+      "position": 0
+    },
+    {
+      "id": 661,
+      "brand": "Toyota",
+      "model": "Corolla",
+      "pilot": {
+        "name": "John Doe",
+        "age": 35
+      },
+      "year": "2022",
+      "position": 0
+    },
+    {
+      "id": 292,
+      "brand": "Mercedes-Benz",
+      "model": "E-Class",
+      "pilot": {
+        "name": "James Anderson",
+        "age": 31
+      },
+      "year": "2022",
+      "position": 0
+    },
+    {
+      "id": 70,
+      "brand": "Hyundai",
+      "model": "Elantra",
+      "pilot": {
+        "name": "Emma Turner",
+        "age": 32
+      },
+      "year": "2022",
+      "position": 0
+    }
+  ]
+}

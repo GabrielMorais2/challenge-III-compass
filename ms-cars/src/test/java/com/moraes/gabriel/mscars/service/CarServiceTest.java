@@ -1,13 +1,14 @@
 package com.moraes.gabriel.mscars.service;
 
 import Utils.JsonUtils;
+import com.moraes.gabriel.mscars.domain.car.Car;
+import com.moraes.gabriel.mscars.domain.car.CarRepository;
+import com.moraes.gabriel.mscars.domain.car.CarService;
+import com.moraes.gabriel.mscars.domain.car.payload.CarRequest;
+import com.moraes.gabriel.mscars.domain.car.payload.CarResponse;
 import com.moraes.gabriel.mscars.exception.CarAlreadyExistsException;
 import com.moraes.gabriel.mscars.exception.CarNotFoundException;
 import com.moraes.gabriel.mscars.exception.PilotAlreadyExistsException;
-import com.moraes.gabriel.mscars.model.Car;
-import com.moraes.gabriel.mscars.model.payload.CarRequest;
-import com.moraes.gabriel.mscars.model.payload.CarResponse;
-import com.moraes.gabriel.mscars.repository.CarRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -38,9 +39,9 @@ class CarServiceTest {
     private ModelMapper mapper;
 
 
-    private static final String CAR = "Payload/CAR.json";
-    private static final String CAR_RESPONSE = "Payload/CAR_RESPONSE.json";
-    private static final String CAR_REQUEST = "Payload/CAR_REQUEST.json";
+    private static final String CAR = "/Payload/CAR.json";
+    private static final String CAR_RESPONSE = "/Payload/CAR_RESPONSE.json";
+    private static final String CAR_REQUEST = "/Payload/CAR_REQUEST.json";
 
     @Test
     void createCar_ReturnAnCarResponse() throws IOException {
@@ -62,15 +63,9 @@ class CarServiceTest {
         Car car = JsonUtils.getObjectFromFile(CAR, Car.class);
         CarRequest carRequest = JsonUtils.getObjectFromFile(CAR_REQUEST, CarRequest.class);
 
-        when(carRepository.existsByBrandAndModelAndYear(
-                eq(car.getBrand()),
-                eq(car.getModel()),
-                eq(car.getYear())))
-                .thenReturn(true);
+        when(carRepository.findAll()).thenReturn(List.of(car));
 
-        assertThrows(CarAlreadyExistsException.class, () -> {
-            carService.createCar(carRequest);
-        });
+        assertThrows(CarAlreadyExistsException.class, () -> carService.createCar(carRequest));
     }
 
     @Test
@@ -78,14 +73,12 @@ class CarServiceTest {
         Car car = JsonUtils.getObjectFromFile(CAR, Car.class);
         CarRequest carRequest = JsonUtils.getObjectFromFile(CAR_REQUEST, CarRequest.class);
 
-        when(carRepository.existsByPilotNameAndPilotAge(
-                eq(car.getPilot().getName()),
-                eq(car.getPilot().getAge())))
-                .thenReturn(true);
+        car.setModel("new Model");
+        car.setBrand("new Brand");
 
-        assertThrows(PilotAlreadyExistsException.class, () -> {
-            carService.createCar(carRequest);
-        });
+        when(carRepository.findAll()).thenReturn(List.of(car));
+
+        assertThrows(PilotAlreadyExistsException.class, () -> carService.createCar(carRequest));
     }
 
     @Test
@@ -123,6 +116,7 @@ class CarServiceTest {
 
         carService.deleteCarById(1L);
 
+        assert car != null;
         verify(carRepository, times(1)).delete(car);
     }
 
@@ -130,7 +124,7 @@ class CarServiceTest {
     void deleteCar_WithNotFoundCar_ReturnAnCarDoesNotExist() {
         when(carRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(CarNotFoundException.class, () -> {carService.deleteCarById(1L);});
+        assertThrows(CarNotFoundException.class, () -> carService.deleteCarById(1L));
 
         verify(carRepository, never()).delete(any(Car.class));
     }
@@ -143,7 +137,7 @@ class CarServiceTest {
         Car carUpdate = new Car();
         carUpdate.setBrand("Updated Brand");
         carUpdate.setModel("Updated Model");
-        carUpdate.setYear("Updated Year");
+        //carUpdate.setYear("2000");
 
         when(carRepository.findById(anyLong())).thenReturn(Optional.ofNullable(car));
         when(carRepository.save(any(Car.class))).thenReturn(carUpdate);
