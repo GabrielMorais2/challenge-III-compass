@@ -65,9 +65,7 @@ class CarServiceTest {
 
         when(carRepository.findAll()).thenReturn(List.of(car));
 
-        assertThrows(CarAlreadyExistsException.class, () -> {
-            carService.createCar(carRequest);
-        });
+        assertThrows(CarAlreadyExistsException.class, () -> carService.createCar(carRequest));
     }
 
     @Test
@@ -80,9 +78,7 @@ class CarServiceTest {
 
         when(carRepository.findAll()).thenReturn(List.of(car));
 
-        assertThrows(PilotAlreadyExistsException.class, () -> {
-            carService.createCar(carRequest);
-        });
+        assertThrows(PilotAlreadyExistsException.class, () -> carService.createCar(carRequest));
     }
 
     @Test
@@ -120,6 +116,7 @@ class CarServiceTest {
 
         carService.deleteCarById(1L);
 
+        assert car != null;
         verify(carRepository, times(1)).delete(car);
     }
 
@@ -127,7 +124,7 @@ class CarServiceTest {
     void deleteCar_WithNotFoundCar_ReturnAnCarDoesNotExist() {
         when(carRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(CarNotFoundException.class, () -> {carService.deleteCarById(1L);});
+        assertThrows(CarNotFoundException.class, () -> carService.deleteCarById(1L));
 
         verify(carRepository, never()).delete(any(Car.class));
     }

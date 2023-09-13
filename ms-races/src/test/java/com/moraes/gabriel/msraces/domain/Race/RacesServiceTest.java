@@ -78,6 +78,7 @@ class RacesServiceTest {
         doNothing().when(raceResultPublisher).publishRaceResult(any());
         doNothing().when(raceSimulationService).runRaces(any());
 
+        assert race != null;
         racesService.runRaces(race.getId());
     }
 
