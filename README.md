@@ -1,31 +1,31 @@
-# Sistema de Gerenciamento de Corridas
+# Race Management System
 
-O Sistema de Gerenciamento de Corridas é uma aplicação robusta e escalável baseada em microservices, projetada para simplificar vários aspectos do gerenciamento de corridas. Aproveitando a arquitetura de microservices, o Gateway de API e o Balanceamento de Carga do Servidor de Nomes, este sistema oferece funcionalidades abrangentes para criar, monitorar e manter eventos de corrida.
+The Race Management System is a robust and scalable application based on microservices architecture, designed to simplify various aspects of race management. Leveraging microservices architecture, API Gateway, and Server Name Load Balancing, this system offers comprehensive functionalities for creating, monitoring, and maintaining race events.
 
-## Caracteristicas de Cada Microservice:
+## Features of Each Microservice:
 
-### MS-Cars (Microserviço de Carros):
+### MS-Cars (Cars Microservice):
 
-- Gerencia informações detalhadas sobre veículos, incluindo marca, modelo e ano.
-- Permite a associação de motoristas a carros específicos, garantindo que não haja motoristas completamente idênticos e nem carros completamente idênticos.
-- Oferece um único conjunto de operações CRUD (Criar, Ler, Atualizar e Excluir) para o gerenciamento de carros, com os pilotos.
+- Manages detailed information about vehicles, including make, model, and year.
+- Allows the association of drivers with specific cars, ensuring there are no completely identical drivers or cars.
+- Offers a single set of CRUD (Create, Read, Update, and Delete) operations for car management, along with pilots.
 
-### MS-Races (Microserviço de Corridas):
+### MS-Races (Races Microservice):
 
-- Gerencia todo o ciclo de vida de eventos de corrida e de pistas.
-- Para uma corrida acontecer, deve haver uma pista.
-- Consome dados via Open Feign de ms-Cars e recupera no máximo 10 carros.
-- Permite a seleção aleatória de 3 a 10 carros para participar de uma corrida.
-- Implementa regras de corrida, onde um carro só pode ultrapassar o carro à sua frente, garantindo uma competição justa.
-- Envia automaticamente o resultado da corrida para uma fila RabbitMQ, permitindo análise e processamento posterior.
+- Manages the entire lifecycle of race events and tracks.
+- For a race to take place, there must be a track.
+- Consumes data via Open Feign from MS-Cars and retrieves up to 10 cars.
+- Allows random selection of 3 to 10 cars to participate in a race.
+- Implements race rules, where a car can only overtake the car in front of it, ensuring fair competition.
+- Automatically sends the race result to a RabbitMQ queue, allowing for later analysis and processing.
 
-### MS-History (Microserviço de Histórico):
+### MS-History (History Microservice):
 
-- Consome dados da fila MS-Races, recebe resultados de corrida e os salva no banco de dados.
-- Registra a data em que cada entrada é inserida no banco de dados, garantindo um histórico completo e rastreável de todas as corridas realizadas.
-- Fornece acesso a informações detalhadas sobre eventos de corrida anteriores.
+- Consumes data from the MS-Races queue, receives race results and saves them in the database.
+- Records the date each entry is inserted into the database, ensuring a complete and traceable history of all races conducted.
+- Provides access to detailed information about previous race events.
 
-## Tecnologias Utilizadas:
+## Technologies Used::
 
 * Java 17
 * Spring Boot 3.1.3
@@ -41,42 +41,42 @@ O Sistema de Gerenciamento de Corridas é uma aplicação robusta e escalável b
 * ZipKin - (Sistema de rastreamento distribuído)
 * Spring Security
   
-## Requisitos
+## Requirements
 
-Para instalar e executar o Sistema de Gerenciamento de Corridas, você precisará dos seguintes requisitos:
+To install and run the Race Management System, you will need the following requirements:
 
 - Docker
 - Docker Compose
 
-## Instalação
+## Installation
 
-Para instalar o Sistema de Gerenciamento de Corridas, siga estas etapas:
+To install the Race Management System, follow these steps:
 
-- Clone o repositório do GitHub:
+- Clone the GitHub repository:
 
 ```shel
   git clone https://github.com/GabrielMorais2/challenge-III-compass.git
 ```
 
-- Entre no diretório do projeto:
+- Navigate to the project directory:
 
 ```shel
   cd challenge-III-compass
 ```
 
-- Execute o docker-compose para iniciar o sistema:
+- Execute the docker-compose command to start the system:
 
 ```shel
   docker-compose -d up
 ```
 
-O sistema será iniciado em http://localhost:9090/.
+The system will be started at http://localhost:9090/.
 
-## Uso
+## Usage
 
-Para usar o Sistema de Gerenciamento de Corridas, você precisará de um token JWT válido. Você pode obter um token JWT registrando um usuário e fazendo o login.
+To use the Race Management System, you will need a valid JWT token. You can obtain a JWT token by registering a user and logging in.
 
- - Para registrar um usuário, envie uma solicitação POST para o endpoint /v1/users/register com os seguintes dados:
+ - To register a user, send a POST request to the /v1/users/register endpoint with the following data:
 
 ```json
 {
@@ -86,7 +86,7 @@ Para usar o Sistema de Gerenciamento de Corridas, você precisará de um token J
 }
 ```
 
- - Para fazer login, envie uma solicitação POST para o endpoint /v1/users/login com os seguintes dados:
+ - To log in, send a POST request to the /v1/users/login endpoint with the following data:
 
 ```json
 {
@@ -95,12 +95,12 @@ Para usar o Sistema de Gerenciamento de Corridas, você precisará de um token J
 }
 ```
 
-O token JWT será retornado no header da resposta.
+The JWT token will be returned in the response header.
 
-Aqui estão alguns exemplos de como usar o Sistema de Gerenciamento de Corridas:
+Here are some examples of how to use the Race Management System:
 
-- Criar uma pista: Para criar uma race, você precisa ter um track registrado. Registre o track enviando uma solicitação POST para o endpoint /v1/tracks com os seguintes dados:
-- 
+- Create a track: To create a race, you need to have a registered track. Register the track by sending a POST request to the /v1/tracks endpoint with the following data:
+  
 ```json
 {
     "name": "corrida x",
@@ -108,7 +108,7 @@ Aqui estão alguns exemplos de como usar o Sistema de Gerenciamento de Corridas:
 }
 ```
 
-- Criar uma Race: Com o ID do track criado, você pode criar uma race enviando uma solicitação POST para o endpoint /v1/races/create com os seguintes dados:
+- Create a Race: With the ID of the created track, you can create a race by sending a POST request to the /v1/races/create endpoint with the following data:
 
 ```json
 {
@@ -117,7 +117,7 @@ Aqui estão alguns exemplos de como usar o Sistema de Gerenciamento de Corridas:
     "date": "2024-08-12"
 }
 ```
-Resposta:
+Response:
 
 ```json
 {
@@ -128,7 +128,7 @@ Resposta:
     "track": {
         "id": "6501b64b1471b22b16eefa4b",
         "name": "teste",
-        "country": "Brasil"
+        "country": "Brazil"
     },
     "cars": [
         {
@@ -167,7 +167,7 @@ Resposta:
     ]
 }
 ```
-- Iniciar uma Corrida: Com o ID da corrida, você pode iniciar uma corrida enviando uma solicitação POST para o endpoint /v1/races/run/{id da corrida}. A resposta incluirá a lista de carros e suas posições na corrida, além da corrida com o status "FINISHED".
+- Start a Race: With the race ID, you can start a race by sending a POST request to the /v1/races/run/{race ID} endpoint. The response will include the list of cars and their positions in the race, along with the race status set to "FINISHED".
 
 ```json
 {
@@ -178,7 +178,7 @@ Resposta:
     "track": {
         "id": "6501b64b1471b22b16eefa4b",
         "name": "teste",
-        "country": "Brasil"
+        "country": "Brazil"
     },
     "cars": [
         {
@@ -218,7 +218,7 @@ Resposta:
 }
 ```
 
-- Histórico de Corridas Finalizadas: Para acessar o histórico de corridas finalizadas, envie uma solicitação POST para /v1/history/races. A resposta será uma lista das corridas finalizadas.
+- History of Finished Races: To access the history of finished races, send a POST request to /v1/history/races. The response will be a list of finished races.
 
 ```json
 [
@@ -266,30 +266,30 @@ Resposta:
             "track": {
                 "id": "6501b64b1471b22b16eefa4b",
                 "name": "teste",
-                "country": "Brasil"
+                "country": "Brazil"
             },
             "status": "FINISHED"
         }
 ]
 ```
 
-Nota: Quando uma corrida é realizada, o microservice de ms-races registra as posições dos pilotos em cada volta e suas trocas de posições. Por padrão, o algoritmo realiza 78 voltas, mas isso pode ser configurado no AppConfig.
+Note: When a race is conducted, the MS-Races microservice records the positions of the pilots on each lap and their position changes. By default, the algorithm performs 78 laps, but this can be configured in AppConfig.
 
-Exemplo:
+Example:
 
 ![image](https://github.com/GabrielMorais2/challenge-III-compass/assets/68476116/02e2039b-c6c2-45af-a60e-be3d9bd39a7d)
 
 ## Documentação
 
-A documentação da API está disponível por meio do Swagger. Para acessar a documentação, visite [Swagger UI](http://localhost:9090/webjars/swagger-ui/index.html) em sua máquina local após realizar o docker-compose do projeto. A documentação inclui detalhes de todos os microservices integrados ao Api Gateway.
-
-Nota: Para acessar os microservices de ms-cars, ms-history, ms-races, você precisa fornecer um token JWT válido, que pode ser obtido registrando um usuário e fazendo o login. O token é disponibilizado no header Authorization da resposta após o login.
+The API documentation is available through Swagger. To access the documentation, visit [Swagger UI](http://localhost:9090/webjars/swagger-ui/index.html) on your local machine after running the docker-compose for the project. The documentation includes details of all the microservices integrated with the API Gateway.
 
 Exemplo:
 
 ![image](https://github.com/GabrielMorais2/challenge-III-compass/assets/68476116/f9203124-9a04-4b1e-b73d-462a903f2a5e)
 
-## Endpoint da API
+Note: To access the microservices of MS-Cars, MS-History, and MS-Races, you need to provide a valid JWT token, which can be obtained by registering a user and logging in. The token is available in the Authorization header of the response after login.
+
+## API Endpoint
 
 ### URLs:
 
@@ -299,65 +299,62 @@ Exemplo:
 
 ### ms-cars
 
-- GET /v1/cars/{id} - Recupere informações sobre um carro específico pelo seu ID.
-- GET /v1/cars - Obtenha uma lista de todos os carros disponíveis.
-- GET /v1/cars/limit - Recuperar uma lista de carros selecionados aleatoriamente, especificando opcionalmente um limite. (O valor default é 10)
-- POST /v1/cars - Crie um novo carro com base nos dados fornecidos no corpo da solicitação.
-- PUT /v1/cars/{id} - Atualize os detalhes de um carro específico pelo seu ID.
-- DELETE /v1/cars/{id} - Exclua um carro específico pelo seu ID.
+- GET /v1/cars/{id} - Retrieve information about a specific car by its ID.
+- GET /v1/cars - Get a list of all available cars.
+- GET /v1/cars/limit - Retrieve a list of randomly selected cars, optionally specifying a limit. (Default value is 10)
+- POST /v1/cars - Create a new car based on the data provided in the request body.
+- PUT /v1/cars/{id} - Update the details of a specific car by its ID.
+- DELETE /v1/cars/{id} - Delete a specific car by its ID.
   
 ### ms-races
 
 Races
 
-- POST /v1/races/run - Inicie uma nova corrida passando o ID da corrida na URL. A corrida será realizada automaticamente e seu resultado será mostrado na resposta da requisição. (Após realizado a corrida, o resultado é enviado para uma fila Rabbit MQ para o MS-history consumir.)
-- POST /v1/races/create - Crie uma nova corrida com os dados fornecidos na solicitação de corrida.
-- GET /v1/races/ -  Obtenha uma lista de todos as corridas realizadas (Seja finalizar ou criada)
-- GET /v1/races/{id} - Recupere informações sobre uma corrida específica pelo seu ID.
+- POST /v1/races/run - Start a new race by passing the race ID in the URL. The race will be conducted automatically, and its result will be shown in the response to the request. (After the race is conducted, the result is sent to a Rabbit MQ queue for MS-History consumption.)
+- POST /v1/races/create - Create a new race with the data provided in the race request.
+- GET /v1/races/ - Get a list of all races conducted (whether finished or created).
+- GET /v1/races/{id} - Retrieve information about a specific race by its ID.
 
 Track
 
-- POST /v1/tracks - Crie uma nova pista com base nos dados fornecidos no corpo da solicitação.
-- GET /v1/tracks{id} - Recupere informações sobre uma pista específica pelo seu ID.
-- GET /v1/tracks - Obtenha uma lista de todos as pistas cadastradas.
+- POST /v1/tracks - Create a new track based on the data provided in the request body.
+- GET /v1/tracks{id} - Retrieve information about a specific track by its ID.
+- GET /v1/tracks - Get a list of all registered tracks.
 
 ### ms-history
 
-- GET /v1/history/races/{id} - Recupere dados de uma corrida ja realizada especificando o seu ID.
-- GET /v1/history/races - Obtenha uma lista de todos os dados históricos de corrida realizadas.
+- GET /v1/history/races/{id} - Retrieve data from a previously conducted race by specifying its ID.
+- GET /v1/history/races - Get a list of all historical data of conducted races.
 
 ### ms-users
 
-- POST /v1/users/register - Registre um usuario passando as informações solicitadas.
-- POST /v1/users/login - Realize o login de um usuário.
+- POST /v1/users/register - Register a user by providing the requested information.
+- POST /v1/users/login - Login to the API
   
+## Security and Quality
 
-## Segurança e Qualidade
-
-### Testes contam com cobertura de 63%
+### Tests have a coverage of 75%
 
 ![image](https://github.com/GabrielMorais2/challenge-III-compass/assets/68476116/8139e9ff-42b4-4d1b-80e0-e07b0f5d6bfc)
 
-### Segurança
+### Security
 
-- Na segurança, foi utilizado o JWT token configurado no API Gateway. O Usuario realiza o registro do cadastro e login, e após ter o token, pode enviar as requições para o restante dos microservices.
+- In terms of security, the JWT token was used and configured in the API Gateway. The user registers for an account and logs in, and after obtaining the token, they can send requests to the rest of the microservices.
 
-### Estrutura de codigo
+### Code Structure
 
-#### estrutura da branch 
+#### Branch Structure
 
-- No início do projeto foram utilizadas as branches fixas "main" e "dev", seguindo o padrão para novas features [microservice]/[feature]-[o que será feito]
+- At the beginning of the project, fixed branches "main" and "dev" were used, following the pattern for new features [microservice]/[feature]-[what will be done]
+- Example: ms-cars/feature-create-car-endpoint
 
-- Exemplo: ms-cars/feature-
+#### Commit Structure
 
-#### estrutura do commit
+- The commit structure follows the following pattern: prefix(microservice): What was done in the commit.
+- Example: feat(ms-cars): Created the POST endpoint for creating cars
 
-- A estrutura de commits, segue o seguinte padrão: prefixo(microsserviço): O que foi feito no commit.
+## Features not implemented but would be good to implement in the future:
 
-- Exemplo: feat(ms-cars)- criado o end point POST
-
-## Funcionalidades que não foram criadas, mas que seria bom implementar posteriormente:
-
-- Implementar Circuit Breaker utilizando o Resilience4j.
-- Implementar Paginação e Cache
-- Implementação de HATEOAS.
+- Implement Circuit Breaker using Resilience4j.
+- Implement Pagination and Caching.
+- Implement HATEOAS.
