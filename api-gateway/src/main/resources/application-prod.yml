@@ -59,7 +59,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://${EUREKA_SERVER}:8761/eureka
     fetch-registry: true
     register-with-eureka: true
     enabled: true
@@ -69,12 +69,13 @@ management:
     web:
       exposure:
         include: '*'
+  zipkin:
+    tracing:
+      endpoint: http://${ZIPKIN_HOST}:9411/api/v2/spans
 
 application:
   security:
     jwt:
       secret-key: 314E399266556A586E5272357528782F113F4528472B4B7250645367566B5570
-
-
 
 

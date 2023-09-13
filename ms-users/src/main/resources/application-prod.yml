@@ -1,28 +1,28 @@
 server:
-  port: 8100
+  port: 8250
   servlet:
     context-path: /
 
 openapi:
   service:
-    title: ms-cars
+    title: ms-users
     version: 1.0.0
     url: http://localhost:9090
 springdoc:
   api-docs:
-    path: /ms-cars/v3/api-docs
+    path: /ms-users/v3/api-docs
   swagger-ui:
-    path: /ms-cars/swagger-ui.html
+    path: /ms-users/swagger-ui.html
 
 spring:
   application:
-    name: MS-CARS
+    name: MS-USERS
 
   sql:
     init:
       mode: always
   datasource:
-    url: jdbc:postgresql://localhost:${DB_CARS_PORT:5432}/${POSTGRES_DB:db_ms-cars}
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${DB_USERS_PORT:5432}/${POSTGRES_DB:db_ms-users}
     username: ${POSTGRES_USER:root}
     password: ${POSTGRES_PASSWORD:root}
   jpa:
@@ -37,8 +37,18 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://${EUREKA_SERVER}:8761/eureka
     fetch-registry: true
     register-with-eureka: true
     enabled: true
+
+application:
+  security:
+    jwt:
+      secret-key: 314E399266556A586E5272357528782F113F4528472B4B7250645367566B5570
+
+management:
+  zipkin:
+    tracing:
+      endpoint: http://${ZIPKIN_HOST}:9411/api/v2/spans
 

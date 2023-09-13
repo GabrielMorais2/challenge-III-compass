@@ -24,6 +24,7 @@ services:
       - EUREKA_SERVER=ms-service-registry
       - RABBITMQ_HOST=rabbitmq
       - MONGO_HOST=mongo-ms-races
+      - ZIPKIN_HOST=zipkin
     depends_on:
       - zipkin
       - mongo-ms-races
@@ -56,6 +57,7 @@ services:
       - EUREKA_SERVER=ms-service-registry
       - RABBITMQ_HOST=rabbitmq
       - MONGO_HOST=mongo-ms-history
+      - ZIPKIN_HOST=zipkin
     depends_on:
       - zipkin
       - ms-service-registry
@@ -87,6 +89,7 @@ services:
     environment:
       - EUREKA_SERVER=ms-service-registry
       - POSTGRES_HOST=postgres-ms-users
+      - ZIPKIN_HOST=zipkin
     depends_on:
       - ms-service-registry
       - postgres-ms-users
@@ -116,6 +119,7 @@ services:
     environment:
       - EUREKA_SERVER=ms-service-registry
       - POSTGRES_HOST=postgres-ms-cars
+      - ZIPKIN_HOST=zipkin
     depends_on:
       - ms-service-registry
       - postgres-ms-cars
@@ -129,6 +133,8 @@ services:
     build:
       context: ./ms-service-registry
       dockerfile: Dockerfile
+    environment:
+      - ZIPKIN_HOST=zipkin
     ports:
       - "8761:8761"
     depends_on:
@@ -145,6 +151,7 @@ services:
       - "9090:9090"
     environment:
       - EUREKA_SERVER=ms-service-registry
+      - ZIPKIN_HOST=zipkin
     depends_on:
       - ms-service-registry
       - zipkin

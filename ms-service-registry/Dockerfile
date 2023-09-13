@@ -7,4 +7,4 @@ FROM openjdk:17
 WORKDIR /app
 COPY --from=build ./app/target/*.jar ./app.jar
 
-ENTRYPOINT java -jar -Dspring.profiles.active=production app.jar
+ENTRYPOINT java -jar -Dspring.profiles.active=prod app.jar
