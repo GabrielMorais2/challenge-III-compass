@@ -39,9 +39,9 @@ class UserControllerTest {
 
     private MockMvc mockMvc;
 
-    private static final String USER_REQUEST = "Payload/USER_REQUEST.json";
-    private static final String USER_RESPONSE = "Payload/USER_RESPONSE.json";
-    private static final String USER_AUTHENTICATION_REQUEST = "Payload/USER_AUTHENTICATION_REQUEST.json";
+    private static final String USER_REQUEST = "/Payload/USER_REQUEST.json";
+    private static final String USER_RESPONSE = "/Payload/USER_RESPONSE.json";
+    private static final String USER_AUTHENTICATION_REQUEST = "/Payload/USER_AUTHENTICATION_REQUEST.json";
 
 
     @BeforeEach
