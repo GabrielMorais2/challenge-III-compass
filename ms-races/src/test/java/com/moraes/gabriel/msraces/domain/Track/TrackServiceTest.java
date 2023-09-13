@@ -1,6 +1,8 @@
 package com.moraes.gabriel.msraces.domain.Track;
 
 import Utils.JsonUtils;
+import com.moraes.gabriel.msraces.domain.Track.payload.TrackRequest;
+import com.moraes.gabriel.msraces.domain.Track.payload.TrackResponse;
 import com.moraes.gabriel.msraces.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

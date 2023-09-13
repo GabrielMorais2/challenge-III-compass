@@ -81,7 +81,7 @@ services:
     networks:
       - postgres-users
 
-  ms-user:
+  ms-users:
     container_name: ms-users
     build:
       context: ./ms-users

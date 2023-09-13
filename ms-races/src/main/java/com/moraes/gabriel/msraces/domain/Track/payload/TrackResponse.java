@@ -1,6 +1,5 @@
-package com.moraes.gabriel.msraces.domain.Track;
+package com.moraes.gabriel.msraces.domain.Track.payload;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,10 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TrackRequest {
+public class TrackResponse {
 
-    @NotBlank
+    private String id;
     private String name;
-    @NotBlank
     private String country;
 }
