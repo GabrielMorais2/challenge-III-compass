@@ -18,9 +18,11 @@ spring:
   application:
     name: MS-CARS
 
-  sql.init.mode: always
+  sql:
+    init:
+      mode: always
   datasource:
-    url: jdbc:postgresql://${POSTGRES_DB:localhost}:${DB_PORT:5433}/${POSTGRES_DB:db_ms-car}
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${DB_CARS_PORT:5432}/${POSTGRES_DB:db_ms-cars}
     username: ${POSTGRES_USER:root}
     password: ${POSTGRES_PASSWORD:root}
   jpa:
@@ -35,7 +37,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://${EUREKA_SERVER}:8761/eureka
     fetch-registry: true
     register-with-eureka: true
     enabled: true

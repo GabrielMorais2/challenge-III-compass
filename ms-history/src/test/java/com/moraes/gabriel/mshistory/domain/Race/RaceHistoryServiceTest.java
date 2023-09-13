@@ -30,8 +30,8 @@ class RaceHistoryServiceTest {
     @Spy
     private ModelMapper mapper;
 
-    private static final String RACE_RESULT_RESPONSE = "Payload/RACE_RESULT_RESPONSE.json";
-    private static final String RACE_RESULT = "Payload/RACE_RESPONSE.json";
+    private static final String RACE_RESULT_RESPONSE = "/Payload/RACE_RESULT_RESPONSE.json";
+    private static final String RACE_RESULT = "/Payload/RACE_RESPONSE.json";
 
     @Test
     void saveRaceData() throws IOException {

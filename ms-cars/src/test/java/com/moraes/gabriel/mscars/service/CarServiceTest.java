@@ -39,9 +39,9 @@ class CarServiceTest {
     private ModelMapper mapper;
 
 
-    private static final String CAR = "Payload/CAR.json";
-    private static final String CAR_RESPONSE = "Payload/CAR_RESPONSE.json";
-    private static final String CAR_REQUEST = "Payload/CAR_REQUEST.json";
+    private static final String CAR = "/Payload/CAR.json";
+    private static final String CAR_RESPONSE = "/Payload/CAR_RESPONSE.json";
+    private static final String CAR_REQUEST = "/Payload/CAR_REQUEST.json";
 
     @Test
     void createCar_ReturnAnCarResponse() throws IOException {

@@ -30,7 +30,7 @@ class RaceHistoryControllerTest {
     @MockBean
     private RaceHistoryService raceHistoryService;
 
-    private static final String RACE_RESPONSE = "Payload/RACE_RESPONSE.json";
+    private static final String RACE_RESPONSE = "/Payload/RACE_RESPONSE.json";
 
     @Test
     void getAllRaceData() throws Exception {

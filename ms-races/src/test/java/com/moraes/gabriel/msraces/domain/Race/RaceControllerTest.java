@@ -40,8 +40,8 @@ class RaceControllerTest {
     @Mock
     private TrackService trackService;
 
-    private static final String RACES_REQUEST = "Payload/races/RACES_REQUEST.json";
-    private static final String RACES_RESPONSE = "Payload/races/RACES_RESPONSE.json";
+    private static final String RACES_REQUEST = "/Payload/races/RACES_REQUEST.json";
+    private static final String RACES_RESPONSE = "/Payload/races/RACES_RESPONSE.json";
     @Test
     void startRace_WithDataValid_ReturnOk() throws Exception {
         RaceRequest raceRequest = JsonUtils.getObjectFromFile(RACES_REQUEST, RaceRequest.class);

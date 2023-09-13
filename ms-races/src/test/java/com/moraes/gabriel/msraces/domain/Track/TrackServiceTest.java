@@ -1,8 +1,6 @@
 package com.moraes.gabriel.msraces.domain.Track;
 
 import Utils.JsonUtils;
-import com.moraes.gabriel.msraces.domain.Race.Race;
-import com.moraes.gabriel.msraces.domain.Race.payload.RaceResponse;
 import com.moraes.gabriel.msraces.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,9 +31,9 @@ class TrackServiceTest {
     @Spy
     private ModelMapper mapper;
 
-    private static final String TRACK = "Payload/track/TRACK.json";
-    private static final String TRACK_REQUEST = "Payload/track/TRACK_REQUEST.json";
-    private static final String TRACK_RESPONSE = "Payload/track/TRACK.json";
+    private static final String TRACK = "/Payload/track/TRACK.json";
+    private static final String TRACK_REQUEST = "/Payload/track/TRACK_REQUEST.json";
+    private static final String TRACK_RESPONSE = "/Payload/track/TRACK.json";
 
     @Test
     void getTrackById_WithExistingTrack_ReturnAnTrack() throws IOException {

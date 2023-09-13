@@ -47,9 +47,9 @@ class UserServiceTest {
     @Spy
     private ModelMapper mapper;
 
-    private static final String USER_REQUEST = "Payload/USER_REQUEST.json";
-    private static final String USER_CREDENTIAL = "Payload/USER_CREDENTIAL.json";
-    private static final String USER_AUTHENTICATION_REQUEST = "Payload/USER_AUTHENTICATION_REQUEST.json";
+    private static final String USER_REQUEST = "/Payload/USER_REQUEST.json";
+    private static final String USER_CREDENTIAL = "/Payload/USER_CREDENTIAL.json";
+    private static final String USER_AUTHENTICATION_REQUEST = "/Payload/USER_AUTHENTICATION_REQUEST.json";
 
     @Test
     public void registerUser_ReturAnUserResponse() throws IOException {

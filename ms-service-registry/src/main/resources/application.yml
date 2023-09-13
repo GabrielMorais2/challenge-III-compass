@@ -4,6 +4,7 @@ server:
 spring:
   application:
     name: SERVICE-REGISTRY
+
 eureka:
   client:
     fetch-registry: false

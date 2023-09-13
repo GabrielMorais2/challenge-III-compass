@@ -24,7 +24,7 @@ class RaceResultPublisherTest {
     @InjectMocks
     private RaceResultPublisher raceResultPublisher;
 
-    private static final String RACES_RESPONSE = "Payload/races/RACES_RESPONSE.json";
+    private static final String RACES_RESPONSE = "/Payload/races/RACES_RESPONSE.json";
 
     @Test
     void publishRaceResult() throws IOException {
