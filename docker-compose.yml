@@ -1,49 +1,155 @@
 version: "3.8"
 
 services:
-  ms-cars:
-    image: postgres
-    container_name: ms-cars
-    restart: always
-    environment:
-      - POSTGRES_DB=db_ms-car
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
-    ports:
-      - "${MS_CARS_PORT:-5433}:5432"
 
-  ms-users:
-    image: postgres
-    container_name: ms-users
-    restart: always
-    environment:
-      - POSTGRES_DB=db_ms-users
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
-    ports:
-      - "${MS_CARS_PORT:-5434}:5432"
-
-  ms-history:
+  mongo-ms-races:
     image: mongo
-    container_name: ms-history
-    restart: always
-    environment:
-      - MONGO_INITDB_DATABASE=db_ms-history
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=root
-    ports:
-      - "${MS_HISTORY_PORT:-27017}:27017"
-
-  ms-races:
-    image: mongo
-    container_name: ms-races
+    container_name: mongo-ms-races
     restart: always
     environment:
       - MONGO_INITDB_DATABASE=db_ms-races
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=root
     ports:
-      - "${MS_RACES_PORT:-27018}:27017"
+      - "27018:27017"
+    networks:
+      - mongo-races
+
+  ms-races:
+    container_name: ms-races
+    build:
+      context: ./ms-races
+      dockerfile: Dockerfile
+    environment:
+      - EUREKA_SERVER=ms-service-registry
+      - RABBITMQ_HOST=rabbitmq
+      - MONGO_HOST=mongo-ms-races
+    depends_on:
+      - zipkin
+      - mongo-ms-races
+      - rabbitmq
+      - ms-service-registry
+    networks:
+      - spring
+      - mongo-races
+
+  mongo-ms-history:
+    image: mongo
+    container_name: mongo-ms-history
+    restart: always
+    environment:
+      - MONGO_HOST=mongo-ms-history
+      - MONGO_INITDB_DATABASE=db_ms-history
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    ports:
+      - "27017:27017"
+    networks:
+      - mongo-history
+
+  ms-history:
+    container_name: ms-history
+    build:
+      context: ./ms-history
+      dockerfile: Dockerfile
+    environment:
+      - EUREKA_SERVER=ms-service-registry
+      - RABBITMQ_HOST=rabbitmq
+      - MONGO_HOST=mongo-ms-history
+    depends_on:
+      - zipkin
+      - ms-service-registry
+      - mongo-ms-races
+      - rabbitmq
+    networks:
+      - spring
+      - mongo-history
+    restart: on-failure
+
+  postgres-ms-users:
+    image: postgres
+    container_name: postgres-ms-users
+    restart: always
+    environment:
+      - POSTGRES_DB=db_ms-users
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+    ports:
+      - "5433:5432"
+    networks:
+      - postgres-users
+
+  ms-user:
+    container_name: ms-users
+    build:
+      context: ./ms-users
+      dockerfile: Dockerfile
+    environment:
+      - EUREKA_SERVER=ms-service-registry
+      - POSTGRES_HOST=postgres-ms-users
+    depends_on:
+      - ms-service-registry
+      - postgres-ms-users
+      - zipkin
+    networks:
+      - spring
+      - postgres-users
+
+  postgres-ms-cars:
+    image: postgres
+    container_name: postgres-ms-cars
+    restart: always
+    environment:
+      - POSTGRES_DB=db_ms-cars
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres-cars
+
+  ms-cars:
+    container_name: ms-cars
+    build:
+      context: ./ms-cars
+      dockerfile: Dockerfile
+    environment:
+      - EUREKA_SERVER=ms-service-registry
+      - POSTGRES_HOST=postgres-ms-cars
+    depends_on:
+      - ms-service-registry
+      - postgres-ms-cars
+      - zipkin
+    networks:
+      - spring
+      - postgres-cars
+
+  ms-service-registry:
+    container_name: ms-service-registry
+    build:
+      context: ./ms-service-registry
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+    depends_on:
+      - zipkin
+    networks:
+      - spring
+
+  api-gateway:
+    container_name: api-gateway
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "9090:9090"
+    environment:
+      - EUREKA_SERVER=ms-service-registry
+    depends_on:
+      - ms-service-registry
+      - zipkin
+    networks:
+      - spring
 
   rabbitmq:
     image: "rabbitmq:3-management"
@@ -55,9 +161,25 @@ services:
     ports:
       - "${RABBITMQ_PORT:-5672}:5672"
       - "${RABBITMQ_MANAGEMENT_PORT:-15672}:15672"
+    networks:
+      - spring
 
   zipkin:
     image: openzipkin/zipkin
     container_name: zipkin
     ports:
       - "9411:9411"
+    networks:
+      - spring
+
+networks:
+  spring:
+    driver: bridge
+  mongo-races:
+    driver: bridge
+  mongo-history:
+    driver: bridge
+  postgres-users:
+    driver: bridge
+  postgres-cars:
+    driver: bridge
