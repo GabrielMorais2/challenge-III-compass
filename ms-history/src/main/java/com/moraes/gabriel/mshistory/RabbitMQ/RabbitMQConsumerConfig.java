@@ -22,12 +22,12 @@ public class RabbitMQConsumerConfig {
 
     @RabbitListener(queues = "SEND-RACE-RESULT-RESPONSE")
     public void receiveRaceData(String raceResultResponse) throws IOException {
-        log.info("RECEBENDO OS DADOS");
+        log.info("RECEIVING THE DATA");
         log.info(raceResultResponse);
-        RaceResultResponse raceResultResponsByMsRaces = objectMapper.readValue(raceResultResponse, RaceResultResponse.class );
-        log.info("MAPEANDO OS DADOS");
-        raceHistoryService.saveRaceData(raceResultResponsByMsRaces);
-        log.info("DADOS ENVIADOS");
+        RaceResultResponse raceResultResponseByMsRaces = objectMapper.readValue(raceResultResponse, RaceResultResponse.class );
+        log.info("MAPPING THE DATA");
+        raceHistoryService.saveRaceData(raceResultResponseByMsRaces);
+        log.info("DATA SENT TO THE DATABASE");
     }
 
 
