@@ -1,5 +1,7 @@
 package com.moraes.gabriel.msraces.domain.Track;
 
+import com.moraes.gabriel.msraces.domain.Track.payload.TrackRequest;
+import com.moraes.gabriel.msraces.domain.Track.payload.TrackResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

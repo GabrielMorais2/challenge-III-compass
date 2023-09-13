@@ -29,9 +29,9 @@ public class RaceSimulationService {
     private void simulateRace(Race race) {
         for (int lap = 0; lap < NUM_LAPS; lap++) {
             for (CarResponse car : race.getCars()) {
-                log.info("Piloto: " + car.getPilot().getName() +
-                        " Posição atual: " + car.getPosition() +
-                        " Velocidade: " + car.getSpeed());
+                log.info("Pilot: " + car.getPilot().getName() +
+                        " Current position: " + car.getPosition() +
+                        " Speed: " + car.getSpeed());
                 car.increaseSpeed();
             }
 
@@ -42,8 +42,8 @@ public class RaceSimulationService {
                 CarResponse nextCar = race.getCars().get(i + 1);
 
                 if (!overtaken && car.getSpeed() > nextCar.getSpeed() && (car.getPosition() > nextCar.getPosition())) {
-                    log.info("Troca de posição: " + car.getPilot().getName() +
-                            " de " + car.getPosition() + " para " + nextCar.getPosition());
+                    log.info("Position change: " + car.getPilot().getName() +
+                            " from  " + car.getPosition() + " to " + nextCar.getPosition());
                     int tempPosition = car.getPosition();
                     car.setPosition(nextCar.getPosition());
                     nextCar.setPosition(tempPosition);

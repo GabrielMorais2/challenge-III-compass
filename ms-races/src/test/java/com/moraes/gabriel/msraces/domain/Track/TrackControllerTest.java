@@ -2,6 +2,8 @@ package com.moraes.gabriel.msraces.domain.Track;
 
 import Utils.JsonUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.moraes.gabriel.msraces.domain.Track.payload.TrackRequest;
+import com.moraes.gabriel.msraces.domain.Track.payload.TrackResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
