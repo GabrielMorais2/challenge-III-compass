@@ -2,7 +2,6 @@ package com.moraes.gabriel.msraces.domain.Track;
 
 import Utils.JsonUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.moraes.gabriel.msraces.domain.Race.payload.RaceResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -33,8 +32,8 @@ class TrackControllerTest {
     @MockBean
     private TrackService trackService;
 
-    private static final String TRACK_REQUEST = "Payload/track/TRACK_REQUEST.json";
-    private static final String TRACK_RESPONSE = "Payload/track/TRACK.json";
+    private static final String TRACK_REQUEST = "/Payload/track/TRACK_REQUEST.json";
+    private static final String TRACK_RESPONSE = "/Payload/track/TRACK.json";
     @Test
     void createTrack_WithDataValid_ReturnCreate() throws Exception {
         TrackRequest trackRequest = JsonUtils.getObjectFromFile(TRACK_REQUEST, TrackRequest.class);

@@ -47,9 +47,9 @@ class RacesServiceTest {
     private ModelMapper mapper;
 
 
-    private static final String RACES_REQUEST = "Payload/races/RACES_REQUEST.json";
-    private static final String RACES_RESPONSE = "Payload/races/RACES_RESPONSE.json";
-    private static final String TRACK = "Payload/track/TRACK.json";
+    private static final String RACES_REQUEST = "/Payload/races/RACES_REQUEST.json";
+    private static final String RACES_RESPONSE = "/Payload/races/RACES_RESPONSE.json";
+    private static final String TRACK = "/Payload/track/TRACK.json";
 
     @Test
     void createRace_ReturnAnRaceResponse() throws IOException {
