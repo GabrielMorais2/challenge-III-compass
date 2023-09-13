@@ -83,7 +83,7 @@ class UserServiceTest {
     @Test
     public void authenticateUser_ReturnAnJwtToken() throws IOException {
         UserAuthenticateRequest userAuthenticateRequest = JsonUtils.getObjectFromFile(USER_AUTHENTICATION_REQUEST, UserAuthenticateRequest.class);
-        UserCredential user = JsonUtils.getObjectFromFile(USER_CREDENTIAL, UserCredential.class);;
+        UserCredential user = JsonUtils.getObjectFromFile(USER_CREDENTIAL, UserCredential.class);
 
         when(userRepository.findByEmail(any())).thenReturn(Optional.of(user));
         when(jwtService.generateToken(any())).thenReturn("894E635266236A586E3272357538782F413F4428472B4B6250645367566B5970");
