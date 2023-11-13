@@ -21,9 +21,20 @@ The Race Management System is a robust and scalable application based on microse
 
 ### MS-History (History Microservice):
 
-- Consumes data from the MS-Races queue, receives race results and saves them in the database.
+- Consumes data from the MS-Races queue, receives race results, and saves them in the database.
 - Records the date each entry is inserted into the database, ensuring a complete and traceable history of all races conducted.
 - Provides access to detailed information about previous race events.
+
+### MS-Users (User Microservice):
+
+- Handles user registration and authentication securely.
+- Employs JWT tokens for user authentication, ensuring data security.
+- Registers users with unique email credentials and encrypts passwords for enhanced security.
+
+### API Gateway:
+
+- Uses a custom AuthenticationFilter to validate JWT tokens for secure access.
+- Token Requirements: Enforces valid JWT tokens for specific routes accessing MS-Cars, MS-Races, and MS-History microservices.
 
 ## Technologies Used::
 
@@ -277,15 +288,15 @@ Note: When a race is conducted, the MS-Races microservice records the positions 
 
 Example:
 
-![image](https://github.com/GabrielMorais2/challenge-III-compass/assets/68476116/02e2039b-c6c2-45af-a60e-be3d9bd39a7d)
+![image](https://github.com/GabrielMorais2/project-race-management-system/assets/68476116/b3881e3c-94c4-4f4c-9be8-3819ac8a7943)
 
 ## Documentação
 
 The API documentation is available through Swagger. To access the documentation, visit [Swagger UI](http://localhost:9090/webjars/swagger-ui/index.html) on your local machine after running the docker-compose for the project. The documentation includes details of all the microservices integrated with the API Gateway.
 
-Exemplo:
+Exemple:
 
-![image](https://github.com/GabrielMorais2/challenge-III-compass/assets/68476116/f9203124-9a04-4b1e-b73d-462a903f2a5e)
+![image](https://github.com/GabrielMorais2/project-race-management-system/assets/68476116/5d492f53-f48c-49d6-b6fa-a32e48b5e4a0)
 
 Note: To access the microservices of MS-Cars, MS-History, and MS-Races, you need to provide a valid JWT token, which can be obtained by registering a user and logging in. The token is available in the Authorization header of the response after login.
 
@@ -301,7 +312,7 @@ Note: To access the microservices of MS-Cars, MS-History, and MS-Races, you need
 
 - GET /v1/cars/{id} - Retrieve information about a specific car by its ID.
 - GET /v1/cars - Get a list of all available cars.
-- GET /v1/cars/limit - Retrieve a list of randomly selected cars, optionally specifying a limit. (Default value is 10)
+- GET /v1/cars/limit?{value} - Retrieve a list of randomly selected cars, optionally specifying a limit. (Default value is 10)
 - POST /v1/cars - Create a new car based on the data provided in the request body.
 - PUT /v1/cars/{id} - Update the details of a specific car by its ID.
 - DELETE /v1/cars/{id} - Delete a specific car by its ID.
@@ -310,7 +321,7 @@ Note: To access the microservices of MS-Cars, MS-History, and MS-Races, you need
 
 Races
 
-- POST /v1/races/run - Start a new race by passing the race ID in the URL. The race will be conducted automatically, and its result will be shown in the response to the request. (After the race is conducted, the result is sent to a Rabbit MQ queue for MS-History consumption.)
+- POST /v1/races/run/{id} - Start a new race by passing the race ID in the URL. The race will be conducted automatically, and its result will be shown in the response to the request. (After the race is conducted, the result is sent to a Rabbit MQ queue for MS-History consumption.)
 - POST /v1/races/create - Create a new race with the data provided in the race request.
 - GET /v1/races/ - Get a list of all races conducted (whether finished or created).
 - GET /v1/races/{id} - Retrieve information about a specific race by its ID.
@@ -318,7 +329,7 @@ Races
 Track
 
 - POST /v1/tracks - Create a new track based on the data provided in the request body.
-- GET /v1/tracks{id} - Retrieve information about a specific track by its ID.
+- GET /v1/tracks/{id} - Retrieve information about a specific track by its ID.
 - GET /v1/tracks - Get a list of all registered tracks.
 
 ### ms-history
@@ -333,9 +344,9 @@ Track
   
 ## Security and Quality
 
-### Tests have a coverage of 75%
+### Tests have a coverage of 73%
 
-![image](https://github.com/GabrielMorais2/challenge-III-compass/assets/68476116/8139e9ff-42b4-4d1b-80e0-e07b0f5d6bfc)
+![image](https://github.com/GabrielMorais2/project-race-management-system/assets/68476116/7111f101-ef4c-4aae-9204-9f51ca2a904f)
 
 ### Security
 
