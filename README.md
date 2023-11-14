@@ -2,6 +2,8 @@
 
 The Race Management System is a robust and scalable application based on microservices architecture, designed to simplify various aspects of race management. Leveraging microservices architecture, API Gateway, and Server Name Load Balancing, this system offers comprehensive functionalities for creating, monitoring, and maintaining race events.
 
+![image](https://github.com/GabrielMorais2/project-race-management-system/assets/68476116/dfab7ffd-7346-4e79-9537-9e90257d318c)
+
 ## Features of Each Microservice:
 
 ### MS-Cars (Cars Microservice):
